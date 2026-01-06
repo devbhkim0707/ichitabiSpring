@@ -79,6 +79,7 @@
   fill: #696969;
   stroke: none;
   cursor: pointer;
+  transition: fill 0.2s ease;
 }
 
 .JT4owTP65shYGJp28lMnd {
@@ -87,7 +88,7 @@
   font-style: normal;
   font-weight: 700;
   fill: #999999;
-  transition: fill ease 0.2s;
+  transition: fill 0.2s ease;
   cursor: pointer;
 }
 
@@ -95,14 +96,26 @@
 ._2Fpqnq8TrxHxTPEdTec-DJ:hover {
   font-weight: 900;
   fill: #444444;
+  transition: fill 0.2s ease;
 }
 
 .kiqJ8lXv0XRSXSa_ThjML {
   fill: #cedeff;
   stroke: #ffffff;
   stroke-width: 0.5;
-  transition: ease fill 0.2s;
+  transition: fill 0.2s ease;
   cursor: pointer;
+}
+
+.kiqJ8lXv0XRSXSa_ThjML:hover {
+  fill: #ffe2e5;
+  transition: fill 0.2s ease;
+}
+
+.kiqJ8lXv0XRSXSa_ThjML:hover ._2tNEFa1NJS4ytwkg4vCn-I {
+  font-weight: 900;
+  fill: #b87d83;
+  transition: fill 0.2s ease;
 }
 
 #hash-div,
@@ -119,15 +132,6 @@
 
 .active {
   color: #121212;
-}
-
-.kiqJ8lXv0XRSXSa_ThjML:hover {
-  fill: #ffe2e5;
-}
-
-.kiqJ8lXv0XRSXSa_ThjML:hover ._2tNEFa1NJS4ytwkg4vCn-I {
-  font-weight: 900;
-  fill: #b87d83;
 }
 
 #reviews {

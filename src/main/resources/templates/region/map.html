@@ -26,6 +26,7 @@
             </li>
           </ul>
         </div>
+        <p id="region-name" th:text="${regionName}"></p>
         <p id="region-title" th:text="${introMessage}"></p>
       </div>
     </block>
@@ -59,7 +60,7 @@
     </div>
     <div id="wrapper-region">
       <!-- S. 세부 지역 지도 영역 -->
-      <th:block th:if="${mapFragment != null}">
+      <th:block th:if="${mapFragment != null && mapFragment.length > 0}">
         <div id="map"
              th:replace="~{${mapFragment} :: map}">
         </div>
