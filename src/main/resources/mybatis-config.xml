@@ -9,7 +9,7 @@
     </settings>
 
     <typeAliases>
-
+        <typeAlias alias="reviewListDto" type="com.ichiban.ichitabi.review.dto.ReviewListDto" />
 
     </typeAliases>
 </configuration>

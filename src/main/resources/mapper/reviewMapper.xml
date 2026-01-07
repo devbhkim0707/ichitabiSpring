@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ichiban.ichitabi.review.mapper.ReviewMapper">
+
+    <select id="selectReviewList" resultType="reviewListDto">
+        SELECT r.id,
+                i.type,
+                i.img_url,
+                i.rep_img_yn,
+                u.birthday,
+                u.gender,
+                r.title,
+                r.location,
+                GROUP_CONCAT(h.hashtag) AS hashtags
+        FROM review r
+            JOIN user u ON r.user_id = u.id
+            LEFT JOIN (
+            SELECT owner_id, type, img_url, rep_img_yn
+            FROM image
+            WHERE type = 'review' AND rep_img_yn = 'Y'
+            ) i ON r.id = i.owner_id
+            JOIN hashtag h ON r.id = h.review_id
+        GROUP BY r.id, i.type, i.img_url, i.rep_img_yn, u.birthday, u.gender, r.title, r.location
+    </select>
+
+    <select id="selectReviewListByHashtag" resultType="reviewListDto">
+        SELECT r.id,
+                i.type,
+                i.img_url,
+                i.rep_img_yn,
+                u.birthday,
+                u.gender,
+                r.title,
+                r.location,
+                GROUP_CONCAT(h.hashtag) AS hashtags
+        FROM review r
+            JOIN user u ON r.user_id = u.id
+            LEFT JOIN (
+            SELECT owner_id, type, img_url, rep_img_yn
+            FROM image
+            WHERE type = 'review' AND rep_img_yn = 'Y'
+            ) i ON r.id = i.owner_id
+            JOIN hashtag h ON r.id = h.review_id
+        WHERE r.id IN (
+            SELECT review_id
+            FROM hashtag
+            WHERE hashtag = #{hashtag}
+        )
+        GROUP BY r.id, i.type, i.img_url, i.rep_img_yn, u.birthday, u.gender, r.title, r.location
+    </select>
+</mapper>

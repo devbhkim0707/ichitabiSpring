@@ -1,0 +1,21 @@
+<li class="review-list" th:fragment="reviewItem(review)">
+    <a th:href="@{/review/detail/{id}(id=${review.id})}">
+        <p>
+            <img class="photo"
+                 th:src="${review.imgUrl != null ? review.imgUrl : '/images/default_review.png'}"
+                 alt="리뷰 이미지" />
+        </p>
+        <div class="age-gender">
+            <p class="age" th:text="|${review.age}대|"></p>
+            <p class="gender" th:text="${review.genderText}"></p>
+        </div>
+        <p class="title" th:text="${review.title}"></p>
+        <p class="place" th:text="${review.location}"></p>
+        <p class="hash">
+          <span th:if="${review.hashtagList != null}" th:each="tag : ${review.hashtagList}" th:text="|#${tag}|"></span>
+        </p>
+    </a>
+    <p class="favo">
+        <button th:data-id="${review.id}">찜</button>
+    </p>
+</li>

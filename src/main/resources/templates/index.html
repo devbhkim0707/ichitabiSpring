@@ -38,13 +38,17 @@
       <div id="reviews">
         <h2>유저들의 추천 여행지</h2>
         <div id="hash-div">
-          <p class="active">#맛집</p>
-          <p>#카페</p>
-          <p>#야경</p>
-          <p>#공원</p>
+          <p data-hash="맛집" class="active">#맛집</p>
+          <p data-hash="카페">#카페</p>
+          <p data-hash="야경">#야경</p>
+          <p data-hash="공원">#공원</p>
         </div>
+
         <div id="review-div">
-          <ul id="review-ul"></ul>
+          <ul id="review-ul">
+            <th:block th:replace="~{fragment/review_item_list :: reviewList(${reviewList})}">
+            </th:block>
+          </ul>
         </div>
       </div>
       <!-- S. 축제 게시글 영역 -->
@@ -66,23 +70,6 @@
     </div>
     <div id="floating-btn"></div>
     <div id="footer" th:insert="~{fragment/footer::footer}"></div>
-    <template id="reviews-template">
-      <li class="review-list">
-        <a href="">
-          <p>
-            <img class="photo" />
-          </p>
-          <div class="age-gender">
-            <p class="age"></p>
-            <p class="gender"></p>
-          </div>
-          <p class="title"></p>
-          <p class="place"></p>
-          <p class="hash"></p>
-        </a>
-        <p class="favo"><button>찜</button></p>
-      </li>
-    </template>
     <template id="festival-item-template">
       <li class="festival-item">
         <a href="#">
@@ -96,6 +83,7 @@
     <script th:src="@{/js/util.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/review_item.js}"></script>
     <script type="module" th:src="@{/js/reviews_list.js}"></script>
   </body>
 </html>

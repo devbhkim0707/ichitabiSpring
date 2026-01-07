@@ -1,0 +1,6 @@
+<th:block th:fragment="reviewList(reviewList)">
+  <th:block th:each="review : ${reviewList}">
+    <li th:replace="~{fragment/review_item :: reviewItem(${review})}"></li>
+  </th:block>
+</th:block>
+
