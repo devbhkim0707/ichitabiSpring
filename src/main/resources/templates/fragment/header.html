@@ -9,12 +9,15 @@
           <input type="text" id="search-top-input" placeholder="Search" />
           <button id="search-top">검색</button>
         </li>
-        <li id="sign-in">
-          <a href="/user/login">로그인</a>
-        </li>
-        <li id="sign-up">
-          <a href="/user/signup">회원가입</a>
-        </li>
+        <a th:href="@{/user/login}">로그인</a>
+        <a th:href="@{/user/signup}">회원가입</a>
+
+        <!--        <li id="sign-in">-->
+<!--          <a href="/templates/user/login">로그인</a>-->
+<!--        </li>-->
+<!--        <li id="sign-up">-->
+<!--          <a href="/templates/user/signup">회원가입</a>-->
+<!--        </li>-->
         <li id="log-out">
           <a href="#">로그아웃</a>
         </li>
@@ -36,7 +39,7 @@
     <div id="wrapper-dropdown">
       <ul id="regions-list">
         <li class="tohoku">
-          <a href="#">
+          <a href="/region/tohoku">
             <p class="region-name">도호쿠</p>
           </a>
           <ul class="cities">
@@ -49,7 +52,7 @@
           </ul>
         </li>
         <li class="hokuriku-shinetsu">
-          <a href="#">
+          <a href="/region/hokuriku">
             <p class="region-name">호쿠리쿠 신에쓰</p>
           </a>
           <ul class="cities">
@@ -75,7 +78,7 @@
           </ul>
         </li>
         <li class="tokai">
-          <a href="#">
+          <a href="/region/tokai">
             <p class="region-name">도카이</p>
           </a>
           <ul class="cities">
@@ -87,7 +90,7 @@
           </ul>
         </li>
         <li class="kansai">
-          <a href="#">
+          <a href="/region/kansai">
             <p class="region-name">간사이</p>
           </a>
           <ul class="cities">
@@ -100,7 +103,7 @@
           </ul>
         </li>
         <li class="chugoku">
-          <a href="#">
+          <a href="/region/chugoku">
             <p class="region-name">주고쿠</p>
           </a>
           <ul class="cities">
@@ -112,7 +115,7 @@
           </ul>
         </li>
         <li class="shikoku">
-          <a href="#">
+          <a href="/region/shikoku">
             <p class="region-name">시코쿠</p>
           </a>
           <ul class="cities">
@@ -123,7 +126,7 @@
           </ul>
         </li>
         <li class="kyushu">
-          <a href="#">
+          <a href="/region/kyushu">
             <p class="region-name">규슈</p>
           </a>
           <ul class="cities">
@@ -137,13 +140,13 @@
           </ul>
         </li>
         <li class="hokkaido">
-          <a href="#">
+          <a href="/region/hokkaido">
             <p class="region-name">홋카이도</p>
           </a>
           <ul class="cities"></ul>
         </li>
         <li class="okinawa">
-          <a href="#">
+          <a href="/region/okinawa">
             <p class="region-name">오키나와</p>
             <ul class="cities"></ul>
           </a>

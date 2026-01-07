@@ -1,50 +1,83 @@
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요 - 로그인</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
-      rel="stylesheet"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>ICHITABI - 로그인</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+          rel="stylesheet"
+  />
+
+  <!-- CSS (Spring Boot static 경로) -->
+  <link rel="stylesheet" th:href="@{/css/reset.css}" />
+  <link rel="stylesheet" th:href="@{/css/common.css}" />
+  <link rel="stylesheet" th:href="@{/css/user.css}" />
+</head>
+
+<body>
+<div id="header" th:insert="~{fragment/header :: header}"></div>
+
+<h2 id="title">로그인</h2>
+
+<div id="login-container">
+
+  <!-- ✅ 로그인 폼 -->
+<!--  <form th:action="@{/user/login}" method="post">-->
+
+    <input
+            type="email"
+            name="email"
+            id="login-id"
+            placeholder="이메일"
+            required
     />
-    <link rel="stylesheet" href="../css/reset.css" />
-    <link rel="stylesheet" href="../css/common.css" />
-    <link rel="stylesheet" href="../css/user.css" />
-  </head>
-  <body>
-    <div id="header" th:insert="~{fragment/header::header}"></div>
-    <h2 id="title">로그인</h2>
-    <div id="login-container">
-      <input type="text" id="login-id" placeholder="이메일" />
-      <div id="email-error" class="error-msg"></div>
-      <input type="password" id="login-password" placeholder="비밀번호" />
-      <div id="pw-error" class="error-msg"></div>
+    <div class="error-msg" th:if="${error}" th:text="${error}"></div>
 
-      <div class="checkbox-container">
-        <label>
-          <input type="checkbox" id="save-id" />
-          <span class="checkbox-label">아이디 저장</span>
-        </label>
-      </div>
+    <input
+            type="password"
+            name="pw"
+            id="login-password"
+            placeholder="비밀번호"
+            required
+    />
 
-      <button class="loginBtn">로그인</button>
-      <div class="links">
-        <a href="sign_up.html">회원가입</a>
-        <a href="#" id="open-modal">비밀번호 찾기</a>
-      </div>
+    <div class="checkbox-container">
+      <label>
+        <input type="checkbox" id="save-id" />
+        <span class="checkbox-label">아이디 저장</span>
+      </label>
     </div>
-    <div id="pw-modal" class="modal">
-      <div class="modal-content">
-        <p>비밀번호 찾기 기능은 준비 중입니다.</p>
-        <button id="close-modal">닫기</button>
-      </div>
+
+    <!-- ✅ submit 버튼 -->
+    <button type="submit" class="loginBtn">로그인</button>
+
+    <div class="links">
+      <a th:href="@{/user/signup}">회원가입</a>
+      <a href="#" id="open-modal">비밀번호 찾기</a>
     </div>
-    <div id="footer" th:insert="~{fragment/footer::footer}"></div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../js/common.js"></script>
-    <script src="../js/user.js"></script>
-    <script src="../js/util.js"></script>
-  </body>
+  </form>
+</div>
+
+<!-- 비밀번호 찾기 모달 -->
+<div id="pw-modal" class="modal">
+  <div class="modal-content">
+    <p>비밀번호 찾기 기능은 준비 중입니다.</p>
+    <button id="close-modal">닫기</button>
+  </div>
+</div>
+
+<div id="footer" th:insert="~{fragment/footer :: footer}"></div>
+
+<!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/user.js}"></script>
+<script th:src="@{/js/util.js}"></script>
+
+</body>
 </html>

@@ -1,19 +1,25 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요 - 회원가입</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요</title>
+
+    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
-      rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+            rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/reset.css" />
-    <link rel="stylesheet" href="../css/common.css" />
-    <link rel="stylesheet" href="../css/user.css" />
+
+    <!-- ✅ CSS (Spring Boot + Thymeleaf 정석) -->
+    <link rel="stylesheet" th:href="@{/css/reset.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/user.css}" />
   </head>
+
+
+<!--  ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요 - 회원가입-->
   <body>
     <div id="header" th:insert="~{fragment/header::header}"></div>
     <h2 id="title">회원가입</h2>
@@ -51,8 +57,8 @@
       <button class="submitBtn">회원가입</button>
     </div>
     <div id="footer" th:insert="~{fragment/footer::footer}"></div>
-    <script src="../js/user.js"></script>
-    <script src="../js/common.js"></script>
-    <script src="../js/util.js"></script>
+    <script th:src="@{/js/user.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/util.js}"></script>
   </body>
 </html>
