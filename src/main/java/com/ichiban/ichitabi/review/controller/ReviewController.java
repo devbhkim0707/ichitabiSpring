@@ -1,5 +1,6 @@
 package com.ichiban.ichitabi.review.controller;
 
+import com.ichiban.ichitabi.review.dto.ReviewDetailDto;
 import com.ichiban.ichitabi.review.dto.ReviewListDto;
 import com.ichiban.ichitabi.review.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,7 +44,12 @@ public class ReviewController {
 
 //    temporary mapping -> to be updated using reviewId value
     @GetMapping("/detail/{id}")
-    public String reviewDetail() {
+    public String reviewDetail(@PathVariable Long id, Model model) {
+
+        ReviewDetailDto reviewDetailDto = reviewService.selectReviewDetail(id);
+
+        model.addAttribute("reviewDetail", reviewDetailDto);
+
         return "reviews/detail";
     }
 }

@@ -10,6 +10,8 @@
 
     <typeAliases>
         <typeAlias alias="reviewListDto" type="com.ichiban.ichitabi.review.dto.ReviewListDto" />
+        <typeAlias alias="reviewDetailDto" type="com.ichiban.ichitabi.review.dto.ReviewDetailDto" />
+
 
     </typeAliases>
 </configuration>

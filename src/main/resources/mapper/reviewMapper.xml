@@ -4,6 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ichiban.ichitabi.review.mapper.ReviewMapper">
 
+    <!--  여행지 추천 페이지 리뷰 리스트  -->
     <select id="selectReviewList" resultType="reviewListDto">
         SELECT r.id,
                 i.type,
@@ -25,6 +26,7 @@
         GROUP BY r.id, i.type, i.img_url, i.rep_img_yn, u.birthday, u.gender, r.title, r.location
     </select>
 
+    <!--  해시태그별 리뷰 리스트  -->
     <select id="selectReviewListByHashtag" resultType="reviewListDto">
         SELECT r.id,
                 i.type,
@@ -49,5 +51,26 @@
             WHERE hashtag = #{hashtag}
         )
         GROUP BY r.id, i.type, i.img_url, i.rep_img_yn, u.birthday, u.gender, r.title, r.location
+    </select>
+
+    <!--  리뷰 상세보기  -->
+    <select id="selectReviewDetail" resultType="reviewDetailDto">
+        SELECT  r.id,
+                r.title,
+                r.companion,
+                r.location,
+                r.rating,
+                r.content,
+                r.date,
+                u.nickname,
+                u.birthday,
+                u.gender,
+                COUNT(rl.id) AS like_count,
+                GROUP_CONCAT(DISTINCT i.img_url) AS img_urls
+        FROM review r JOIN user u ON r.user_id = u.id
+                LEFT JOIN review_likes rl ON r.id = rl.review_id
+                LEFT JOIN image i ON i.owner_id = r.id AND i.type = 'REVIEW'
+        WHERE r.id = 1
+        GROUP BY r.id, r.title, r.companion, r.location, r.rating, r.content, r.date, u.nickname, u.birthday, u.gender
     </select>
 </mapper>
