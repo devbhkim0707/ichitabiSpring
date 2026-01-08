@@ -1,7 +1,4 @@
 // review_detail.js
-
-import reviews from '../resources/data/reviews.js';
-
 const likeBtn = document.getElementById('like-btn');
 const likeCount = document.getElementById('like-count');
 let count = 0;
@@ -29,61 +26,20 @@ const contentEl = document.querySelector('.content-1');
 const nick1El = document.getElementById('nick1');
 const starEl = document.querySelectorAll('#star p');
 
-console.log(starEl);
-renderStars();
+document.addEventListener("DOMContentLoaded", () => {
+  const starBox = document.getElementById("star");
+  if (!starBox) return;
 
-function renderStars() {
-  starEl.forEach((star, i) => {
-    if (i < reviews[0].rating) {
-      star.classList.add('filled');
-    } else {
-      star.classList.remove('filled');
+  const rating = Number(starBox.dataset.rating); // ex) 3
+  const stars = starBox.querySelectorAll(".star");
+
+  stars.forEach((star, index) => {
+    if (index < rating) {
+      star.classList.add("filled");
     }
   });
-}
+});
 
-getReviewerInfo();
-
-async function getReviewerInfo() {
-  // 유저 json 데이터 불러오기
-  const users = await getUsers();
-  const reviewer = await users.find((user) => user.email === reviews[0].user);
-
-  // 나이 정보 계산
-  const reviewYear = parseInt(reviews[0].date.split('년')[0]);
-  const birthDate = reviewer.birthDate;
-  const birthDateString = birthDate.toString();
-  const birthYear = parseInt(birthDateString.slice(0, 4));
-  const reviewerAge = reviewYear - birthYear;
-
-  const age = calculateAge(reviewerAge);
-
-  nickEl.textContent = reviewer.nickname;
-  genderEl.textContent = reviewer.gender === 'm' ? '남성' : '여성';
-  ageEl.textContent = age;
-}
-
-function calculateAge(age) {
-  const dividedAgeByTen = parseInt(age / 10);
-
-  if (dividedAgeByTen < 1) {
-    return '어린이';
-  } else if (dividedAgeByTen > 9) {
-    return '100세 이상';
-  }
-
-  return `${dividedAgeByTen}0대`;
-}
-
-nameEl.textContent = reviews[0].title;
-hashtagEl.textContent = reviews[0].hashtag.map((tag) => `#${tag}`).join(' ');
-photeLeftEl.src = reviews[0].imagePath[0];
-photeRight1El.src = reviews[0].imagePath[1];
-photeRight2El.src = reviews[0].imagePath[2];
-dateEl.textContent = reviews[0].date;
-companionContentEl.textContent = reviews[0].companion;
-contentEl.textContent = reviews[0].content;
-nick1El.textContent = reviews[0]._id;
 
 const recommendUlEl = document.getElementById('recommend-ul');
 const recommendTempEl = document.getElementById('recommend-template');

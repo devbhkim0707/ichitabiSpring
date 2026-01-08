@@ -15,14 +15,17 @@ public class ReviewService {
     @Autowired
     private ReviewMapper reviewMapper;
 
+    @Transactional(readOnly = true)
     public List<ReviewListDto> selectReviewList() {
         return reviewMapper.selectReviewList();
     }
 
+    @Transactional(readOnly = true)
     public List<ReviewListDto> selectReviewListByHashtag(String hashtag) {
         return reviewMapper.selectReviewListByHashtag(hashtag);
     }
 
+    @Transactional(readOnly = true)
     public ReviewDetailDto selectReviewDetail(Long id) {
         return reviewMapper.selectReviewDetail(id);
     }

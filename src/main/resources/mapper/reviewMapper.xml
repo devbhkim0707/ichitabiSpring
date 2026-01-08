@@ -48,7 +48,7 @@
         WHERE r.id IN (
             SELECT review_id
             FROM hashtag
-            WHERE hashtag = #{hashtag}
+            WHERE hashtag LIKE CONCAT('%', #{hashtag}, '%')
         )
         GROUP BY r.id, i.type, i.img_url, i.rep_img_yn, u.birthday, u.gender, r.title, r.location
     </select>
@@ -66,11 +66,13 @@
                 u.birthday,
                 u.gender,
                 COUNT(rl.id) AS like_count,
-                GROUP_CONCAT(DISTINCT i.img_url) AS img_urls
+                GROUP_CONCAT(DISTINCT i.img_url) AS img_urls,
+                GROUP_CONCAT(h.hashtag) AS hashtags
         FROM review r JOIN user u ON r.user_id = u.id
+                JOIN hashtag h ON r.id = h.review_id
                 LEFT JOIN review_likes rl ON r.id = rl.review_id
                 LEFT JOIN image i ON i.owner_id = r.id AND i.type = 'REVIEW'
-        WHERE r.id = 1
+        WHERE r.id = #{id}
         GROUP BY r.id, r.title, r.companion, r.location, r.rating, r.content, r.date, u.nickname, u.birthday, u.gender
     </select>
 </mapper>
