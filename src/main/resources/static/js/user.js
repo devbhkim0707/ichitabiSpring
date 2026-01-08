@@ -6,8 +6,8 @@ function isValidEmail(email) {
 
 // ================= 회원가입 =================
 document.addEventListener('DOMContentLoaded', () => {
-  const submitBtn = document.querySelector('.submitBtn');
-  if (!submitBtn) {
+  const signupForm = document.getElementById('signupForm');
+  if (!signupForm) {
     console.info('회원가입 페이지가 아님 → 회원가입 JS 스킵');
     return;
   }
@@ -26,16 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
   maleBtn?.addEventListener('click', () => {
     selectedGender = 'male';
     maleBtn.classList.add('selected');
-    femaleBtn.classList.remove('selected');
+    femaleBtn?.classList.remove('selected');
   });
 
   femaleBtn?.addEventListener('click', () => {
     selectedGender = 'female';
     femaleBtn.classList.add('selected');
-    maleBtn.classList.remove('selected');
+    maleBtn?.classList.remove('selected');
   });
 
-  submitBtn.addEventListener('click', () => {
+  signupForm.addEventListener('submit', (e) => {
     const email = emailInput.value.trim();
     const password = pwInput.value.trim();
     const rePassword = rePwInput.value.trim();
@@ -43,38 +43,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const birth = birthInput.value.trim();
 
     if (!email || !password || !rePassword || !nickname || !birth) {
+      e.preventDefault();
       alert('모든 입력 칸을 채워주세요.');
       return;
     }
 
     if (!isValidEmail(email)) {
+      e.preventDefault();
       alert('올바른 이메일 형식이 아닙니다.');
       return;
     }
 
     if (password !== rePassword) {
+      e.preventDefault();
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
 
     if (!selectedGender) {
+      e.preventDefault();
       alert('성별을 선택해주세요.');
       return;
     }
 
     if (!agreeCheckbox.checked) {
+      e.preventDefault();
       alert('약관에 동의해주세요.');
       return;
     }
 
-    alert('회원가입 완료 (API 연동 예정)');
   });
 });
 
 // ================= 로그인 =================
 document.addEventListener('DOMContentLoaded', () => {
-  const loginBtn = document.querySelector('.loginBtn');
-  if (!loginBtn) {
+  const loginForm = document.getElementById('loginForm');
+  if (!loginForm) {
     console.info('로그인 페이지가 아님 → 로그인 JS 스킵');
     return;
   }
@@ -90,33 +94,21 @@ document.addEventListener('DOMContentLoaded', () => {
     saveIdCheckbox.checked = true;
   }
 
-  loginBtn.addEventListener('click', async () => {
+  loginForm.addEventListener('submit', (e) => {
     const email = loginIdInput.value.trim();
     const pw = loginPwInput.value.trim();
 
     if (!email || !pw) {
+      e.preventDefault();                       // validation 실패 시 form 의 POST method 호출 방지
       alert('이메일과 비밀번호를 입력해주세요.');
       return;
     }
 
-    try {
-      const res = await axios.post('/user/login', {
-        email,
-        pw,
-      });
-
-      if (res.data.success) {
-        if (saveIdCheckbox.checked) {
-          localStorage.setItem('savedId', email);
-        } else {
-          localStorage.removeItem('savedId');
-        }
-
-        alert('로그인 성공!');
-        window.location.href = '/';
-      }
-    } catch (err) {
-      alert(err.response?.data?.message || '로그인 중 오류 발생');
+    // 아이디 저장 처리 (로그인 시도 시)
+    if (saveIdCheckbox.checked) {
+      localStorage.setItem('savedId', email);
+    } else {
+      localStorage.removeItem('savedId');
     }
   });
 });
