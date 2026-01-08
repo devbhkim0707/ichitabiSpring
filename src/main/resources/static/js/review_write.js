@@ -193,9 +193,46 @@ contentInput.addEventListener('input', () => {
 function confirmAction() {
   if (confirm('작성 하시겠습니까?')) {
     // 나중에 확인 버튼을 클릭했을 때 데이터 저장 코드
-    alert('게시물 업로드를 시작하겠습니다!');
+    //alert('게시물 업로드를 시작하겠습니다!');
+    const reviewData = {
+      title: nameInput.value,
+      rating: selectedRating,
+      // 연도+월 합쳐서 '2025-01' 형태로 만들거나 각각 보냄
+      date: `${document.getElementsByName('year')[0].value}-${document.getElementsByName('month')[0].value}`,
+      companion: selectedBtn ? selectedBtn.dataset.value : '단독',
+      content: contentInput.value,
+      // 버튼 선택한 태그 + 직접 입력한 태그 합치기
+      hashtags: [...tagSelectedBtn, ...customHashtags]
+    };
+
+    // 데이터 검증
+    if(!reviewData.title || reviewData.rating === 0) {
+      alert("제목과 평점을 입력해주세요!");
+      return;
+    }
+
+    // 2. Fetch API를 이용한 서버 전송
+    fetch('/review/write', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reviewData)
+    })
+        .then(response => {
+          if (response.ok) {
+            alert('게시물 업로드 성공!');
+            window.location.href = '/review/reviews'; // 성공 시 리스트로 이동
+          } else {
+            alert('저장에 실패했습니다.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('서버 연결 오류가 발생했습니다.');
+        });
+
   } else {
-    // 나중에 취소 버튼을 클릭했을 때 이전으로 그냥 아무것도 안거드는
     alert('작성을 이어서 해주세요!');
   }
 }
