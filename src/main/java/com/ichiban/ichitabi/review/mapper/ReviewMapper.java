@@ -1,5 +1,6 @@
 package com.ichiban.ichitabi.review.mapper;
 
+import com.ichiban.ichitabi.review.dto.ReviewDetailDto;
 import com.ichiban.ichitabi.review.dto.ReviewListDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,4 +12,6 @@ public interface ReviewMapper {
     List<ReviewListDto> selectReviewList();
 
     List<ReviewListDto> selectReviewListByHashtag(String hashtag);
+
+    ReviewDetailDto selectReviewDetail(Long id);
 }

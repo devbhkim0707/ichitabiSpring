@@ -17,7 +17,7 @@
 
   <body>
     <div id="header" th:insert="~{fragment/header::header}"></div>
-    <div id="wrapper">
+    <div id="wrapper" th:object="${reviewDetail}">
       <div id="location">
         <ul>
           <li class="btn-home">
@@ -44,29 +44,29 @@
         </ul>
       </div>
 
-      <div id="name"></div>
+      <div id="name" th:text="*{title}"></div>
       <div class="btn-writer">
         <button id="edit-btn">수정</button>
         <button id="delete-btn">삭제</button>
       </div>
 
       <div id="main1">
-        <div id="star">
-          <p id="star-1">o</p>
-          <p id="star-2">o</p>
-          <p id="star-3">o</p>
-          <p id="star-4">o</p>
-          <p id="star-5">o</p>
+        <div id="star" th:data-rating="*{rating}">
+          <p class="star">o</p>
+          <p class="star">o</p>
+          <p class="star">o</p>
+          <p class="star">o</p>
+          <p class="star">o</p>
         </div>
-        <div id="hashtag"></div>
+        <div id="hashtag" th:if="*{hashtagList != null}" th:each="tag : *{hashtagList}" th:text="|#${tag}|"></div>
       </div>
       <div id="main-img">
         <div class="left">
-          <p><img class="photo-left" /></p>
+          <p><img class="photo-left" th:if="*{imgUrl != null and imgUrl.size() > 0}" th:src="*{imgUrl[0]}"/></p>
         </div>
         <div class="right">
-          <p><img class="photo-right1" /></p>
-          <p><img class="photo-right2" /></p>
+          <p><img class="photo-right1" th:if="*{imgUrl != null and imgUrl.size() > 1}" th:src="*{imgUrl[1]}"/></p>
+          <p><img class="photo-right2"  th:if="*{imgUrl != null and imgUrl.size() > 2}" th:src="*{imgUrl[2]}"/></p>
         </div>
       </div>
 
@@ -74,23 +74,23 @@
         <div class="left">
           <div id="main2-0">
             <p id="avatar"><img src="" alt="아바타이미지" /></p>
-            <p id="nick"></p>
+            <p id="nick" th:text="*{nickname}"></p>
             <p>님의 추천 장소</p>
           </div>
 
           <div id="main2-1">
-            <p id="gender"></p>
-            <p id="age"></p>
+            <p id="gender" th:text="*{genderText}"></p>
+            <p id="age"  th:text="|*{age}대|"></p>
           </div>
 
           <div id="main2-2">
             <p id="period">시기</p>
-            <p id="date"></p>
+            <p id="date" th:text="*{date}"></p>
           </div>
 
           <div id="main2-3">
             <p id="companion">동행</p>
-            <p id="companion-content"></p>
+            <p id="companion-content" th:text="*{companionText}"></p>
           </div>
         </div>
 
@@ -98,7 +98,7 @@
           <div id="main3">
             <div id="like">
               <button id="like-btn">좋아요</button>
-              <p id="like-count"></p>
+              <p id="like-count" th:text="*{likeCount}"></p>
             </div>
             <button id="share-btn">공유</button>
           </div>
@@ -106,13 +106,14 @@
       </div>
       <div id="content">
         <p>장소 소개</p>
-        <div class="content-1"></div>
+        <div class="content-1" th:text="*{content}"></div>
       </div>
     </div>
 
     <div id="main4">
       <div id="main4-1">
-        <p id="nick1"><p>님이 관심 있을만한 게시물</p></p>
+        <p id="nick1"></p>
+        <p>님이 관심 있을만한 게시물</p>
       </div>
       <ul id="recommend-ul"></ul>
     </div>
