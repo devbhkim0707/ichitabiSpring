@@ -17,54 +17,77 @@ $(function () {
 
   const isLoggedInBoolean = isLoggedIn === 'true';
 
-  $('#header').load('../components/header.html', function () {
-    const searchInputEl = document.getElementById('header-search');
-    const logoutBtnEl = document.getElementById('log-out');
-    const signInBtnEl = document.getElementById('sign-in');
-    const signUpBtnEl = document.getElementById('sign-up');
-
-    // 헤더 영역의 검색 메뉴 표시 여부 결정
-    if (isMainPage) {
-      searchInputEl.style.display = 'none';
-    } else if (!isMainPage) {
-      searchInputEl.style.display = 'block';
-    }
-    if (isLoggedInBoolean) {
-      logoutBtnEl.style.display = 'block';
-      signInBtnEl.style.display = 'none';
-      signUpBtnEl.style.display = 'none';
-    } else if (!isLoggedInBoolean) {
-      logoutBtnEl.style.display = 'none';
-      signInBtnEl.style.display = 'block';
-      signUpBtnEl.style.display = 'block';
-    }
-
-    // 로그아웃 버튼
-    logoutBtnEl.addEventListener('click', () => {
-      sessionStorage.setItem('isLoggedIn', 'false');
-      window.location.reload();
-    });
-
-    // 헤더 영역 드롭다운
+  $(function () {
     const navBarRegionBtn = $('#region-btn');
     const dropdown = $('#dropdown');
 
-    navBarRegionBtn.on('mouseenter', () => {
-      dropdown.stop().fadeIn(200);
-    });
+    if (navBarRegionBtn.length && dropdown.length) {
+      navBarRegionBtn.on('mouseenter', () => {
+        dropdown.stop().fadeIn(200);
+      });
 
-    navBarRegionBtn.on('mouseleave', () => {
-      dropdown.stop().fadeOut(200);
-    });
+      navBarRegionBtn.on('mouseleave', () => {
+        dropdown.stop().fadeOut(200);
+      });
 
-    dropdown.on('mouseenter', () => {
-      dropdown.stop().fadeIn(200);
-    });
+      dropdown.on('mouseenter', () => {
+        dropdown.stop().fadeIn(200);
+      });
 
-    dropdown.on('mouseleave', () => {
-      dropdown.stop().fadeOut(200);
-    });
+      dropdown.on('mouseleave', () => {
+        dropdown.stop().fadeOut(200);
+      });
+    }
   });
+
+//  $('#header').load('../components/header.html', function () {
+//    const searchInputEl = document.getElementById('header-search');
+//    const logoutBtnEl = document.getElementById('log-out');
+//    const signInBtnEl = document.getElementById('sign-in');
+//    const signUpBtnEl = document.getElementById('sign-up');
+//
+//    // 헤더 영역의 검색 메뉴 표시 여부 결정
+//    if (isMainPage) {
+//      searchInputEl.style.display = 'none';
+//    } else if (!isMainPage) {
+//      searchInputEl.style.display = 'block';
+//    }
+//    if (isLoggedInBoolean) {
+//      logoutBtnEl.style.display = 'block';
+//      signInBtnEl.style.display = 'none';
+//      signUpBtnEl.style.display = 'none';
+//    } else if (!isLoggedInBoolean) {
+//      logoutBtnEl.style.display = 'none';
+//      signInBtnEl.style.display = 'block';
+//      signUpBtnEl.style.display = 'block';
+//    }
+//
+//    // 로그아웃 버튼
+//    logoutBtnEl.addEventListener('click', () => {
+//      sessionStorage.setItem('isLoggedIn', 'false');
+//      window.location.reload();
+//    });
+//
+//    // 헤더 영역 드롭다운
+//    const navBarRegionBtn = $('#region-btn');
+//    const dropdown = $('#dropdown');
+//
+//    navBarRegionBtn.on('mouseenter', () => {
+//      dropdown.stop().fadeIn(200);
+//    });
+//
+//    navBarRegionBtn.on('mouseleave', () => {
+//      dropdown.stop().fadeOut(200);
+//    });
+//
+//    dropdown.on('mouseenter', () => {
+//      dropdown.stop().fadeIn(200);
+//    });
+//
+//    dropdown.on('mouseleave', () => {
+//      dropdown.stop().fadeOut(200);
+//    });
+//  });
 
   // 게시글 작성 플로팅 버튼
   if (isLoggedInBoolean) {
