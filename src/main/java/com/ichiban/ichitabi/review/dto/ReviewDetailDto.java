@@ -28,7 +28,7 @@ public class ReviewDetailDto {
 
     private LocalDate birthday;
 
-    private int gender;
+    private String gender;
 
     private int likeCount;
 
@@ -49,6 +49,12 @@ public class ReviewDetailDto {
         }
     }
 
+    public String getGenderText() {
+        if ("MALE".equals(gender)) return "남";
+        if ("FEMALE".equals(gender)) return "여";
+        return "";
+    }
+
     public void setHashtags(String hashtags) {
         this.hashtags = hashtags;
         if (hashtags != null && !hashtags.isEmpty()) {
@@ -62,10 +68,7 @@ public class ReviewDetailDto {
         return (age/10) * 10;
     }
 
-
-    public String getGenderText() {
-        if (gender == 1) return "남";
-        if (gender == 2) return "여";
-        return "";
+    public List<String> getImgUrl() {
+        return imgUrl == null ? new ArrayList<>() : imgUrl;
     }
 }

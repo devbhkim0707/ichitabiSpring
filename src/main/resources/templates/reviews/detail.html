@@ -62,11 +62,11 @@
       </div>
       <div id="main-img">
         <div class="left">
-          <p><img class="photo-left" th:if="*{imgUrl != null and imgUrl.size() > 0}" th:src="*{imgUrl[0]}"/></p>
+          <p><img class="photo-left" th:src="${imgUrl?.size() > 0 ? review.imgUrl[0] : '/images/default_review.webp'}"/></p>
         </div>
         <div class="right">
-          <p><img class="photo-right1" th:if="*{imgUrl != null and imgUrl.size() > 1}" th:src="*{imgUrl[1]}"/></p>
-          <p><img class="photo-right2"  th:if="*{imgUrl != null and imgUrl.size() > 2}" th:src="*{imgUrl[2]}"/></p>
+          <p><img class="photo-right1" th:src="${imgUrl?.size() > 1 ? review.imgUrl[1] : '/images/default_review.webp'}"/></p>
+          <p><img class="photo-right2" th:src="${imgUrl?.size() > 2 ? review.imgUrl[2] : '/images/default_review.webp'}"/></p>
         </div>
       </div>
 

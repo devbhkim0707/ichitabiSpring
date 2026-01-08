@@ -18,7 +18,7 @@ public class ReviewListDto {
 
     private LocalDate birthday;
 
-    private int gender;
+    private String gender;
 
     private String imgUrl;
 
@@ -41,8 +41,8 @@ public class ReviewListDto {
 
 
     public String getGenderText() {
-        if (gender == 1) return "남";
-        if (gender == 2) return "여";
+        if ("MALE".equals(gender)) return "남";
+        if ("FEMALE".equals(gender)) return "여";
         return "";
     }
 }
