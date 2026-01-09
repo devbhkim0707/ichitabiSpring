@@ -64,6 +64,14 @@ public class UserController {
         return "/user/sign_in";
     }
 
+    /* ================= 마이페이지 ================= */
+
+    @GetMapping("mypage")
+    public String userMyPage() {
+        return "/user/mypage";
+    }
+
+
     /* ================= 로그인 ================= */
 
     // 로그인 페이지
