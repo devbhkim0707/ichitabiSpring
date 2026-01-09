@@ -5,13 +5,13 @@
   text-align: center;
   margin-bottom: 30px;
 }
+
 #login-container {
   width: 500px;
   margin: 0 auto;
   margin-bottom: 200px;
   color: #212121;
 }
-
 
 #login-container input[type='email'],
 #login-container input[type='text'],
@@ -30,6 +30,7 @@
 #login-container input[type='email'] {
   margin-bottom: 16px;
 }
+
 #login-container input[type='password'] {
   margin-bottom: 15px;
 }
@@ -37,6 +38,7 @@
 .password-wrapper {
   position: relative;
 }
+
 .pw-toggle-btn {
   position: absolute;
   right: 15px;
@@ -46,6 +48,7 @@
   background-size: contain;
   cursor: pointer;
 }
+
 .pw-toggle-btn.hidden {
   background-image: url('/icons/hidden.png');
 }
@@ -63,6 +66,7 @@
 .checkbox-container input[type='checkbox'] {
   margin-right: 5px;
 }
+
 .checkbox-container .checkbox-label {
   position: relative;
   top: -7px;
@@ -92,6 +96,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .modal-content {
   background-color: white;
   padding: 40px 30px;
@@ -99,11 +104,13 @@
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
+
 .modal-content p {
   font-size: 18px;
   color: #212121;
   margin-bottom: 20px;
 }
+
 .modal-content button {
   padding: 10px 20px;
   font-size: 14px;
@@ -113,11 +120,13 @@
   border-radius: 6px;
   cursor: pointer;
 }
+
 .links {
   display: flex;
   justify-content: space-between;
   margin-top: 8px;
 }
+
 .links a {
   color: #212121;
 }
@@ -129,6 +138,7 @@
   text-align: center;
   color: #212121;
 }
+
 #signup-container input[type='text'],
 #signup-container input[type='password'] {
   width: 500px;
@@ -141,6 +151,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
 }
+
 .genderBtn button {
   width: 49%;
   height: 50px;
@@ -151,28 +162,39 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
 .male-Btn {
   color: white;
 }
+
 .male-Btn.selected {
   background-color: #113062;
   border-color: #212121;
 }
+
 .female-Btn {
   color: white;
 }
+
 .female-Btn.selected {
   background-color: #113062;
   border-color: #212121;
 }
+
 .agreement {
   margin-top: 20px;
   text-align: right;
 }
+
 .agreement input[type='checkbox'] {
   margin-right: 4px;
   margin-top: 6px;
 }
+
+.login-error {
+  color: #bd2130;
+}
+
 .submitBtn {
   width: 500px;
   height: 60px;
