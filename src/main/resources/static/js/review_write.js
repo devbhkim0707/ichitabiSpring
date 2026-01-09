@@ -197,8 +197,8 @@ function confirmAction() {
     const reviewData = {
       title: nameInput.value,
       rating: selectedRating,
-      // 연도+월 합쳐서 '2025-01' 형태로 만들거나 각각 보냄
-      date: `${document.getElementsByName('year')[0].value}-${document.getElementsByName('month')[0].value}`,
+      // 연도+월 합쳐서 '2025년 - 01월'
+      date: `${document.getElementsByName('year')[0].value}년 - ${document.getElementsByName('month')[0].value}월`,
       companion: selectedBtn ? selectedBtn.dataset.value : '단독',
       content: contentInput.value,
       // 버튼 선택한 태그 + 직접 입력한 태그 합치기
