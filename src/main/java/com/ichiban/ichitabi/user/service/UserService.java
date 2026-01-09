@@ -33,4 +33,12 @@ public class UserService {
 
         return userDto;
     }
+
+    public Long findUserId(String email) {
+        return Long.valueOf(userMapper.findUserId(email));
+    }
+
+    public String findNickname(String email) {
+        return userMapper.findNickname(email);
+    }
 }

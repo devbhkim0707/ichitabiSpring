@@ -24,4 +24,16 @@
         WHERE   email = #{email}
         AND     deleted_at IS NULL
     </select>
+
+    <select id="findUserId">
+        SELECT id
+        FROM user
+        WHERE email = #{email}
+    </select>
+
+    <select id="findNickname">
+        SELECT nickname
+        FROM user
+        WHERE email = #{email}
+    </select>
 </mapper>
