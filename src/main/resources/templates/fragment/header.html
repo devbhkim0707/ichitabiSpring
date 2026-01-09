@@ -1,4 +1,4 @@
-<header th:fragment="header">
+<header th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
   <div id="header-wrapper">
     <a id="ichitabi-logo" href="/">
       <h1>ICHITABI</h1>
@@ -9,17 +9,14 @@
           <input type="text" id="search-top-input" placeholder="Search" />
           <button id="search-top">검색</button>
         </li>
-        <a th:href="@{/user/login}">로그인</a>
-        <a th:href="@{/user/signup}">회원가입</a>
-
-        <!--        <li id="sign-in">-->
-<!--          <a href="/templates/user/login">로그인</a>-->
-<!--        </li>-->
-<!--        <li id="sign-up">-->
-<!--          <a href="/templates/user/signup">회원가입</a>-->
-<!--        </li>-->
-        <li id="log-out">
-          <a href="#">로그아웃</a>
+        <li id="sign-in" sec:authorize="isAnonymous()">
+          <a th:href="@{/user/login}">로그인</a>
+        </li>
+        <li id="sign-up" sec:authorize="isAnonymous()">
+          <a th:href="@{/user/signup}">회원가입</a>
+        </li>
+        <li id="log-out" sec:authorize="isAuthenticated()">
+          <a th:href="@{/user/logout}">로그아웃</a>
         </li>
       </ul>
     </div>

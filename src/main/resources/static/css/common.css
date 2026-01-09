@@ -46,10 +46,6 @@ header .header-right ul a {
   background-color: #113062;
 }
 
-header .header-right ul #log-out {
-  display: none;
-}
-
 header .header-right ul #header-search {
   display: none;
   position: relative;

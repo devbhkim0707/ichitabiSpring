@@ -3,6 +3,7 @@ package com.ichiban.ichitabi.user.form;
 import com.ichiban.ichitabi.user.Gender;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -21,11 +22,12 @@ public class UserSignUpForm {
     private String confirmPassword;
 
     @NotBlank(message = "이름은 필수입니다.")
-    private String name;
+    private String nickname;
 
     @NotNull(message = "성별을 선택해주세요.")
     private Gender gender;
 
+    @DateTimeFormat(pattern = "yyyyMMdd")
     @NotNull(message = "생년월일은 필수입니다.")
     @Past(message = "생년월일은 과거 날짜여야 합니다.")
     private LocalDate birth;
