@@ -1,5 +1,6 @@
 package com.ichiban.ichitabi.review.dto;
 
+import com.ichiban.ichitabi.user.Gender;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class ReviewDetailDto {
 
     private LocalDate birthday;
 
-    private String gender;
+    private Gender gender;
 
     private int likeCount;
 
@@ -50,8 +51,8 @@ public class ReviewDetailDto {
     }
 
     public String getGenderText() {
-        if ("MALE".equals(gender)) return "남";
-        if ("FEMALE".equals(gender)) return "여";
+        if (gender == Gender.MALE) return "남";
+        if (gender == Gender.FEMALE) return "여";
         return "";
     }
 
