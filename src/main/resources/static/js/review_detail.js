@@ -1,16 +1,32 @@
-// review_detail.js
 const likeBtn = document.getElementById('like-btn');
 const likeCount = document.getElementById('like-count');
-let count = 0;
+
+let count = parseInt(likeCount.innerText);
+const reviewId = likeBtn.dataset.reviewId;
 
 likeBtn.addEventListener('click', () => {
-  likeBtn.classList.toggle('on');
-  if (likeBtn.classList.contains('on')) {
-    likeCount.innerHTML = ++count;
-  } else {
-    likeCount.innerHTML = --count;
-  }
+    const isLiked = likeBtn.classList.toggle('on');
+
+    fetch('/reviews/like', {
+        method: isLiked ? 'POST' : 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            reviewId: reviewId
+        })
+    })
+    .then(res => {
+        if (!res.ok) throw new Error('error');
+        likeCount.innerText = isLiked ? ++count : --count;
+    })
+    .catch(() => {
+        // 실패 시 UI 롤백
+        likeBtn.classList.toggle('on');
+        alert('처리 중 오류 발생');
+    });
 });
+
 
 const nameEl = document.getElementById('name');
 const hashtagEl = document.getElementById('hashtag');
