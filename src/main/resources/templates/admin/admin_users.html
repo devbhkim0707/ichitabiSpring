@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ICHITABI - 회원 관리</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/reset.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+  </head>
+
+  <body>
+    <div id="header" th:insert="~{fragment/header::header}"></div>
+    <div class="wrapper">
+      <div id="board-users">
+        <table class="post-list">
+          <thead>
+            <tr>
+              <th>닉네임</th>
+              <th>이메일</th>
+              <th>작성 글 수</th>
+              <th>가입일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>gildong</td>
+              <td>gildong@gmail.com</td>
+              <td>5</td>
+              <td>
+                <div class="date">
+                  2025.07.09
+                  <button class="delete-btn">탈퇴</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>gildong</td>
+              <td>gildong@gmail.com</td>
+              <td>5</td>
+              <td>
+                <div class="date">
+                  2025.07.09
+                  <button class="delete-btn">탈퇴</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>gildong</td>
+              <td>gildong@gmail.com</td>
+              <td>5</td>
+              <td>
+                <div class="date">
+                  2025.07.09
+                  <button class="delete-btn">탈퇴</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="page-nav">
+          <button href="#" class="prev">이전</button>
+          <button href="#" class="page-btn active">1</button>
+          <button href="#" class="page-btn">2</button>
+          <button href="#" class="page-btn">3</button>
+          <button href="#" class="next">다음</button>
+        </div>
+      </div>
+    </div>
+    <div id="footer" th:insert="~{fragment/footer::footer}"></div>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/util.js}"></script>
+    <script th:src="@{/js/admin.js}"></script>
+  </body>
+</html>
