@@ -22,7 +22,7 @@
         <li id="sign-up" sec:authorize="isAnonymous()">
           <a th:href="@{/user/signup}">회원가입</a>
         </li>
-        <li id="mypapge" sec:authorize="isAuthenticated()">
+        <li id="mypapge" sec:authorize="hasAnyAuthority('ROLE_USER')">
           <a th:href="@{/user/mypage}">마이페이지</a>
         </li>
         <li id="log-out" sec:authorize="isAuthenticated()">

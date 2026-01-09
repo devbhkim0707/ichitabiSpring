@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:sec="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="UTF-8" />
     <title>ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요</title>
@@ -117,7 +117,11 @@
       </div>
       <ul id="recommend-ul"></ul>
     </div>
-    <div id="floating-btn"></div>
+    <div
+      id="floating-btn"
+      sec:authorize="hasAnyAuthority('ROLE_USER')"
+      th:insert="~{fragment/floating_button::floating}"
+    ></div>
     <div id="footer" th:insert="~{fragment/footer::footer}"></div>
 
     <template id="recommend-template">
