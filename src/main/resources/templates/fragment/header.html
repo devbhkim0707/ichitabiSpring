@@ -1,6 +1,13 @@
 <header th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
   <div id="header-wrapper">
-    <a id="ichitabi-logo" href="/">
+    <a class="ichitabi-logo"
+       sec:authorize="hasAnyAuthority('ROLE_ADMIN')"
+       th:href="@{/admin}">
+      <h1>ICHITABI</h1>
+    </a>
+    <a class="ichitabi-logo"
+       sec:authorize="!hasAnyAuthority('ROLE_ADMIN')"
+       th:href="@{/}">
       <h1>ICHITABI</h1>
     </a>
     <div class="header-right">
@@ -15,13 +22,16 @@
         <li id="sign-up" sec:authorize="isAnonymous()">
           <a th:href="@{/user/signup}">회원가입</a>
         </li>
+        <li id="mypapge" sec:authorize="hasAnyAuthority('ROLE_USER')">
+          <a th:href="@{/user/mypage}">마이페이지</a>
+        </li>
         <li id="log-out" sec:authorize="isAuthenticated()">
           <a th:href="@{/user/logout}">로그아웃</a>
         </li>
       </ul>
     </div>
   </div>
-  <nav class="gnb">
+  <nav class="gnb" sec:authorize="!hasAnyAuthority('ROLE_ADMIN')">
     <ul>
       <li id="region-btn">
         <a href="/region/list">일본의 지역</a>
@@ -151,4 +161,13 @@
       </ul>
     </div>
   </div>
+  <nav class="gnb-admin" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+    <ul id="gnb-admin">
+      <li><a th:href="@{/admin/review}">게시글 관리</a></li>
+      <li><p class="seperator"></p></li>
+      <li><a th:href="@{/admin/user}">회원 관리</a></li>
+      <li><p class="seperator"></p></li>
+      <li><a th:href="@{/admin/festival}">축제 관리</a></li>
+    </ul>
+  </nav>
 </header>

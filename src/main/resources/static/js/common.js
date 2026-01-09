@@ -42,20 +42,18 @@ $(function () {
   });
 
   // 게시글 작성 플로팅 버튼
-  if (isLoggedInBoolean) {
-    $('#floating-btn').load('../components/floating_button.html', () => {
-      const floatBtn = $('#review-write-btn');
-      const toolTip = $('#speech-bubble');
+  $('#floating-btn').load('/fragment/floating_button.html', () => {
+    const floatBtn = $('#review-write-btn');
+    const toolTip = $('#speech-bubble');
 
-      floatBtn.on('mouseenter', () => {
-        toolTip.stop().fadeIn();
-      });
-
-      floatBtn.on('mouseleave', () => {
-        toolTip.stop().fadeOut();
-      });
+    floatBtn.on('mouseenter', () => {
+      toolTip.stop().fadeIn();
     });
-  }
 
-  $('#footer').load('../components/footer.html');
+    floatBtn.on('mouseleave', () => {
+      toolTip.stop().fadeOut();
+    });
+  });
+
+
 });
