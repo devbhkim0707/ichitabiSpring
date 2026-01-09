@@ -1,5 +1,6 @@
 package com.ichiban.ichitabi.review.dto;
 
+import com.ichiban.ichitabi.user.Gender;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class ReviewDetailDto {
 
     private LocalDate birthday;
 
-    private int gender;
+    private Gender gender;
 
     private int likeCount;
 
@@ -49,6 +50,12 @@ public class ReviewDetailDto {
         }
     }
 
+    public String getGenderText() {
+        if (gender == Gender.MALE) return "남";
+        if (gender == Gender.FEMALE) return "여";
+        return "";
+    }
+
     public void setHashtags(String hashtags) {
         this.hashtags = hashtags;
         if (hashtags != null && !hashtags.isEmpty()) {
@@ -62,10 +69,7 @@ public class ReviewDetailDto {
         return (age/10) * 10;
     }
 
-
-    public String getGenderText() {
-        if (gender == 1) return "남";
-        if (gender == 2) return "여";
-        return "";
+    public List<String> getImgUrl() {
+        return imgUrl == null ? new ArrayList<>() : imgUrl;
     }
 }
