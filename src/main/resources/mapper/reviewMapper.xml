@@ -56,6 +56,7 @@
     <!--  리뷰 상세보기  -->
     <select id="selectReviewDetail" resultType="reviewDetailDto">
         SELECT  r.id,
+                r.user_id,
                 r.title,
                 r.companion,
                 r.location,
