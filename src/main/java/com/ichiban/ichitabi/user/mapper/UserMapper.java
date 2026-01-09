@@ -9,6 +9,8 @@ public interface UserMapper {
     int userSignup(UserDto userDto);
     UserDto userLogin(String email);
     UserDto findByEmail(String email);
+    Long findUserId(String email);
+    String findNickname(String email);
 }
 
 
