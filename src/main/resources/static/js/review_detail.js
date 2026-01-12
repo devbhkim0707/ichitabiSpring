@@ -1,16 +1,64 @@
-// review_detail.js
 const likeBtn = document.getElementById('like-btn');
-const likeCount = document.getElementById('like-count');
-let count = 0;
+const likeCountEl = document.getElementById('like-count');
+const reviewId = likeBtn.dataset.reviewId;
 
-likeBtn.addEventListener('click', () => {
-  likeBtn.classList.toggle('on');
-  if (likeBtn.classList.contains('on')) {
-    likeCount.innerHTML = ++count;
-  } else {
-    likeCount.innerHTML = --count;
-  }
+const token = document.querySelector("meta[name='_csrf']").getAttribute("content");
+const header = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+
+async function fetchLikeCount() {
+    const res = await fetch(`/review/like?reviewId=${reviewId}`);
+    if (!res.ok) throw new Error();
+    const count = await res.json();
+    likeCountEl.innerText = count;
+}
+
+async function checkLikeStatus() {
+    const res = await fetch(`/review/like/check?reviewId=${reviewId}`);
+    if (!res.ok) return;
+
+    const liked = await res.json();
+
+    if (liked) {
+        likeBtn.classList.add('on');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchLikeCount();
+    checkLikeStatus();
 });
+
+
+
+likeBtn.addEventListener('click', async () => {
+    const isCurrentlyLiked = likeBtn.classList.contains('on');
+
+    try {
+        const res = await fetch(`/review/like?reviewId=${reviewId}`, {
+            method: isCurrentlyLiked ? 'DELETE' : 'POST',
+            headers: {
+                [header]: token
+            }
+        });
+
+        if (res.status === 401) {
+            alert('로그인 후 이용해주세요.');
+            return;
+        }
+        if (!res.ok) throw new Error();
+
+        await fetchLikeCount();
+
+        likeBtn.classList.toggle('on');
+
+    } catch (e) {
+        alert('오류 발생');
+    }
+});
+
+
+
+
 
 const nameEl = document.getElementById('name');
 const hashtagEl = document.getElementById('hashtag');

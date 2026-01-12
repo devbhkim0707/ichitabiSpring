@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <title>ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -97,8 +99,8 @@
         <div class="right">
           <div id="main3">
             <div id="like">
-              <button id="like-btn">좋아요</button>
-              <p id="like-count" th:text="*{likeCount}"></p>
+              <button id="like-btn" th:data-review-id="*{id}">좋아요</button>
+              <p id="like-count"></p>
             </div>
             <button id="share-btn">공유</button>
           </div>
