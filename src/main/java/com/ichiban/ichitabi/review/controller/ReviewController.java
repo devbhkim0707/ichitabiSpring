@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/review")
@@ -69,6 +71,62 @@ public class ReviewController {
         model.addAttribute("nickname", nickname);
 
         return "reviews/detail";
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity likeInsert(@RequestParam("reviewId") Long reviewId, Principal principal) {
+
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        Long userId = userService.findUserId(principal.getName());
+
+        Map map = new HashMap();
+        map.put("userId", userId);
+        map.put("reviewId", reviewId);
+
+        int result = reviewService.likeInsert(map);
+
+        return new ResponseEntity<Integer>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/like")
+    public ResponseEntity likeDelete(@RequestParam("reviewId") Long reviewId, Principal principal) {
+
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+
+        Long userId = userService.findUserId(principal.getName());
+
+        Map map = new HashMap();
+        map.put("userId", userId);
+        map.put("reviewId", reviewId);
+
+        int result = reviewService.likeDelete(map);
+
+        return new ResponseEntity<Integer>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/like")
+    @ResponseBody
+    public int likeCount(@RequestParam("reviewId") Long reviewId) {
+        return reviewService.likeCount(reviewId);
+    }
+
+    @GetMapping("/like/check")
+    @ResponseBody
+    public ResponseEntity<Boolean> isLiked(@RequestParam Long reviewId, Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.ok(false);
+        }
+
+        Long userId = userService.findUserId(principal.getName());
+        boolean liked =  reviewService.isLiked(reviewId, userId);
+
+        return ResponseEntity.ok(liked);
     }
 
 
