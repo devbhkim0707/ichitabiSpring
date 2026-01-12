@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReviewService {
@@ -28,5 +29,21 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public ReviewDetailDto selectReviewDetail(Long id) {
         return reviewMapper.selectReviewDetail(id);
+    }
+
+    public int likeInsert(Map map) {
+        return reviewMapper.likeInsert(map);
+    }
+
+    public int likeDelete(Map map) {
+        return reviewMapper.likeDelete(map);
+    }
+
+    public int likeCount(Long reviewId) {
+        return reviewMapper.likeCount(reviewId);
+    }
+
+    public boolean isLiked(Long reviewId, Long userId) {
+        return reviewMapper.isLiked(reviewId, userId) > 0;
     }
 }
