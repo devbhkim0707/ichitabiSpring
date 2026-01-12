@@ -189,11 +189,10 @@ contentInput.addEventListener('input', () => {
   contentCount.textContent = contentInput.value.length;
 });
 
-// 작성하기 버튼 클릭시 확인창 보여주기
+// 작성하기 버튼 클릭시 확인창 보여주기 - 데이터 전송
 function confirmAction() {
   if (confirm('작성 하시겠습니까?')) {
-    // 나중에 확인 버튼을 클릭했을 때 데이터 저장 코드
-    //alert('게시물 업로드를 시작하겠습니다!');
+
     const reviewData = {
       title: nameInput.value,
       rating: selectedRating,
@@ -202,16 +201,22 @@ function confirmAction() {
       companion: selectedBtn ? selectedBtn.dataset.value : '단독',
       content: contentInput.value,
       // 버튼 선택한 태그 + 직접 입력한 태그 합치기
-      hashtags: [...tagSelectedBtn, ...customHashtags]
+      hashtags: [...tagSselectedBtn, ...hashtags]
     };
+
+    console.log("================ [전송 데이터 확인] ================");
+    console.log("전체 객체:", reviewData);
+    console.table(reviewData); // 테이블 형태로 예쁘게 출력
+    console.log("해시태그 목록:", reviewData.hashtags.join(", "));
+    console.log("=================================================");
 
     // 데이터 검증
     if(!reviewData.title || reviewData.rating === 0) {
-      alert("제목과 평점을 입력해주세요!");
+      alert("장소 이름과 평점을 입력해주세요!");
       return;
     }
 
-    // 2. Fetch API를 이용한 서버 전송
+    // 서버 전송
     fetch('/review/write', {
       method: 'POST',
       headers: {
