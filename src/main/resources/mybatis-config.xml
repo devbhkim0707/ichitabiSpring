@@ -12,5 +12,7 @@
         <typeAlias alias="reviewListDto" type="com.ichiban.ichitabi.review.dto.ReviewListDto" />
         <typeAlias alias="reviewDetailDto" type="com.ichiban.ichitabi.review.dto.ReviewDetailDto" />
         <typeAlias alias="userDto" type="com.ichiban.ichitabi.user.dto.UserDto" />
+        <typeAlias alias="festivalDto" type="com.ichiban.ichitabi.festival.dto.FestivalDto" />
+        <typeAlias alias="imageDto" type="com.ichiban.ichitabi.common.image.ImageDto" />
     </typeAliases>
 </configuration>
