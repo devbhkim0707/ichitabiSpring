@@ -9,4 +9,23 @@
         INSERT  INTO    festival(title, season, content)
         VALUES          (#{title}, #{season}, #{content})
     </insert>
+
+    <!--  계절별 축제 목록 조회  -->
+    <select id="selectFestivalList" parameterType="String" resultType="festivalDto">
+        SELECT  f.id,
+                f.title,
+                f.season,
+                f.content,
+                i.img_url
+        FROM    festival f
+            LEFT JOIN   image i
+                ON  f.id    = i.owner_id
+                AND i.type  = 'FESTIVAL'
+                AND i.rep_img_yn = 'Y'
+        WHERE   f.deleted_at IS NULL
+
+        <if test="season != null and season != 'ALL'">
+            AND f.season = #{season}
+        </if>
+    </select>
 </mapper>

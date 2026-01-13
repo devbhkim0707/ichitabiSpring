@@ -1,0 +1,12 @@
+<th:block th:fragment="festivalCarousel(festivalItems)">
+  <li class="festival-item"
+      th:each="festival : ${festivalItems}">
+    <a th:href="@{/festival/{id}(id=${festival.id})}">
+      <p class="festival-photo">
+        <img th:src="@{${festival.imgUrl}}" alt="${festival.title}" />
+      </p>
+      <p class="title"
+         th:text="${festival.title}"></p>
+    </a>
+  </li>
+</th:block>
