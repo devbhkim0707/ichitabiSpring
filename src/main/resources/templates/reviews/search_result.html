@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <title>ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,9 +20,15 @@
   <body>
     <div id="header" th:insert="~{fragment/header::header}"></div>
     <div id="wrapper">
-      <h2>'키워드'검색 결과 여행지 추천</h2>
+      <div id="search-div">
+        <h2 th:text="*{keyword}">'키워드'</h2>
+        <h2>검색 결과 여행지 추천</h2>
+      </div>
       <div id="review-div">
-        <ul id="review-ul"></ul>
+        <ul id="review-ul">
+          <th:block th:replace="~{fragment/review_item_list :: reviewList(${reviewList})}">
+          </th:block>
+        </ul>
       </div>
     </div>
     <div
@@ -29,24 +37,6 @@
       th:insert="~{fragment/floating_button::floating}"
     ></div>
     <div id="footer" th:insert="~{fragment/footer::footer}"></div>
-
-    <template id="reviews-template">
-      <li class="review-list">
-        <a href="">
-          <p>
-            <img class="photo" />
-          </p>
-          <div class="age-gender">
-            <p class="age"></p>
-            <p class="gender"></p>
-          </div>
-          <p class="title"></p>
-          <p class="place"></p>
-          <p class="hash"></p>
-        </a>
-        <p class="favo"><button>찜</button></p>
-      </li>
-    </template>
     <script type="module" th:src="@{/js/reviews_list.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/util.js}"></script>

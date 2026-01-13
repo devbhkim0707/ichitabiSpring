@@ -33,6 +33,33 @@ hashs.forEach(hash => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById("search-main-input");
+    const searchBtn = document.getElementById("search-main");
+
+    function goSearch() {
+          const keyword = input.value.trim();
+
+          if (!keyword) {
+            alert("검색어를 입력해주세요.");
+            input.focus();
+            return;
+          }
+
+          location.href = "/review/search?keyword=" + encodeURIComponent(keyword);
+    }
+
+        searchBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              goSearch();
+        });
+
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            goSearch();
+          }
+        });
+
   const defaultHash = document.querySelector('#hash-div p[data-hash="맛집"]');
   if (defaultHash) {
     loadReviews('맛집', defaultHash);

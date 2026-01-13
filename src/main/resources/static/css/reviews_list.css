@@ -26,6 +26,14 @@
   text-indent: -99999px;
 }
 
+#search-div {
+    display: flex;
+}
+
+#search-div h2 {
+    margin-left: 10px;
+}
+
 #review-div {
   margin-top: 24px;
 }

@@ -49,7 +49,7 @@ public class ReviewController {
         return "reviews/reviews";
     }
 
-//    temporary mapping -> to be updated using reviewId value
+    // review_detail 페이지
     @GetMapping("/detail/{id}")
     public String reviewDetail(@PathVariable Long id, Principal principal, Model model) {
 
@@ -73,6 +73,7 @@ public class ReviewController {
         return "reviews/detail";
     }
 
+    // 좋아요 등록
     @PostMapping("/like")
     public ResponseEntity likeInsert(@RequestParam("reviewId") Long reviewId, Principal principal) {
 
@@ -91,6 +92,7 @@ public class ReviewController {
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
 
+    // 좋아요 취소
     @DeleteMapping("/like")
     public ResponseEntity likeDelete(@RequestParam("reviewId") Long reviewId, Principal principal) {
 
@@ -110,15 +112,17 @@ public class ReviewController {
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
 
+    // 좋아요 갯수
     @GetMapping("/like")
     @ResponseBody
     public int likeCount(@RequestParam("reviewId") Long reviewId) {
         return reviewService.likeCount(reviewId);
     }
 
+    // 좋아요 체크되어 있는지 확인
     @GetMapping("/like/check")
     @ResponseBody
-    public ResponseEntity<Boolean> isLiked(@RequestParam Long reviewId, Principal principal) {
+    public ResponseEntity<Boolean> isLiked(@RequestParam("reviewId") Long reviewId, Principal principal) {
         if (principal == null) {
             return ResponseEntity.ok(false);
         }
@@ -127,6 +131,15 @@ public class ReviewController {
         boolean liked =  reviewService.isLiked(reviewId, userId);
 
         return ResponseEntity.ok(liked);
+    }
+
+    // 검색 결과 리스트
+    @GetMapping("/search")
+    public String searchResult(@RequestParam("keyword") String keyword, Model model) {
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("reviewList", reviewService.searchResult(keyword));
+
+        return "reviews/search_result";
     }
 
 }

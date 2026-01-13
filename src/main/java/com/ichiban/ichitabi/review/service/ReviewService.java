@@ -46,4 +46,8 @@ public class ReviewService {
     public boolean isLiked(Long reviewId, Long userId) {
         return reviewMapper.isLiked(reviewId, userId) > 0;
     }
+
+    public List<ReviewListDto> searchResult(String keyword) {
+        return reviewMapper.searchResult(keyword);
+    }
 }
