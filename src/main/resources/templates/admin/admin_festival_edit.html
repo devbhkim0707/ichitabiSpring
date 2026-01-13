@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>ICHITABI - 축제 등록</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/reset.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+</head>
+<body>
+<div id="header" th:insert="~{fragment/header::header}"></div>
+<div id="wrapper-admin">
+    <h2 class="admin-title">축제 등록</h2>
+    <div class="error-message"
+         th:if="${errorMessage}"
+         th:text="${errorMessage}">
+    </div>
+    <form
+        class="festival-form"
+        th:action="@{/admin/festival/new}"
+        method="post"
+    >
+        <div class="form-group">
+            <label>축제 제목</label>
+            <input type="text" name="title" placeholder="축제 제목을 입력하세요" />
+        </div>
+        <div class="form-group">
+            <label>시즌</label>
+            <div class="season-radio">
+                <label><input type="radio" name="season" value="SPRING" /> 봄</label>
+                <label><input type="radio" name="season" value="SUMMER" /> 여름</label>
+                <label><input type="radio" name="season" value="FALL" /> 가을</label>
+                <label><input type="radio" name="season" value="WINTER" /> 겨울</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>축제 설명</label>
+            <textarea
+                    name="content"
+                    placeholder="축제에 대한 설명을 입력하세요"
+            ></textarea>
+        </div>
+        <div class="form-group">
+            <label>이미지 URL</label>
+            <input
+                    type="text"
+                    name="imgUrl"
+                    id="imgUrl"
+                    placeholder="https://example.com/image.jpg"
+            />
+            <div class="image-preview">
+                <img id="preview-img" />
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">등록하기</button>
+        </div>
+    </form>
+</div>
+<div id="footer" th:insert="~{fragment/footer::footer}"></div>
+
+<script>
+    const input = document.getElementById('imgUrl');
+    const preview = document.getElementById('preview-img');
+
+    input.addEventListener('input', () => {
+      preview.src = input.value;
+    });
+</script>
+</body>
+</html>

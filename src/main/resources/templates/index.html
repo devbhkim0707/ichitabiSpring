@@ -57,13 +57,16 @@
       <div id="festivals">
         <h2>일본의 시기별 축제</h2>
         <div id="hash-season">
-          <p>#봄</p>
-          <p>#여름</p>
-          <p>#가을</p>
-          <p>#겨울</p>
+          <p data-season="SPRING" th:classappend="${currentSeason == 'SPRING'} ? 'active'">봄</p>
+          <p data-season="SUMMER" th:classappend="${currentSeason == 'SUMMER'} ? 'active'">여름</p>
+          <p data-season="FALL"   th:classappend="${currentSeason == 'FALL'} ? 'active'">가을</p>
+          <p data-season="WINTER" th:classappend="${currentSeason == 'WINTER'} ? 'active'">겨울</p>
         </div>
         <div id="festivals-list">
-          <ul></ul>
+          <ul>
+            <th:block th:replace="~{fragment/festival_carousel::festivalCarousel(${festivalItems})}">
+            </th:block>
+          </ul>
           <button id="btn-prev-festival">◀</button>
           <button id="btn-next-festival">▶</button>
         </div>
@@ -76,17 +79,6 @@
       th:insert="~{fragment/floating_button::floating}"
     ></div>
     <div id="footer" th:insert="~{fragment/footer::footer}"></div>
-    <template id="festival-item-template">
-      <li class="festival-item">
-        <a href="#">
-          <p class="festival-photo">
-            <img />
-          </p>
-          <p class="title"></p>
-        </a>
-      </li>
-    </template>
-    <script th:src="@{/js/util.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/main.js}"></script>
     <script th:src="@{/js/review_item.js}"></script>
