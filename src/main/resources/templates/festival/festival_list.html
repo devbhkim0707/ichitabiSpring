@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요</title>
+
+    <link rel="stylesheet" th:href="@{/css/reset.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/festival.css}" />
+</head>
+<body>
+<div id="header" th:insert="~{fragment/header::header}"></div>
+<div id="wrapper-main">
+    <h2 class="page-title">일본의 시기별 축제</h2>
+    <!-- 필터 영역 -->
+    <div class="filter-box">
+        <select id="season-select">
+            <option value="">전체</option>
+            <option value="SPRING" th:selected="${season?.name() == 'SPRING'}">봄</option>
+            <option value="SUMMER" th:selected="${season?.name() == 'SUMMER'}">여름</option>
+            <option value="FALL"   th:selected="${season?.name() == 'FALL'}">가을</option>
+            <option value="WINTER" th:selected="${season?.name() == 'WINTER'}">겨울</option>
+        </select>
+    </div>
+    <!-- 카드 리스트 -->
+    <div class="festival-grid">
+        <th:block th:each="festival : ${festivalItems}">
+            <a th:href="@{/festival/detail(festivalId=${festival.id})}">
+                <div class="festival-card">
+                    <div class="festival-img">
+                        <img th:src="${festival.imgUrl}" alt="축제 이미지" />
+                    </div>
+                    <div class="festival-info">
+                        <span class="season" th:text="${festival.season}">SPRING</span>
+                        <h3 th:text="${festival.title}">축제 이름</h3>
+                        <p th:text="${festival.content}">
+                            축제 소개 텍스트
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </th:block>
+    </div>
+</div>
+<div id="footer" th:insert="~{fragment/footer::footer}"></div>
+<script th:src="@{/js/festivals_list.js}"></script>
+</body>
+</html>

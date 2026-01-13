@@ -28,4 +28,19 @@
             AND f.season = #{season}
         </if>
     </select>
+
+    <select id="selectFestivalById" parameterType="int" resultType="festivalDto">
+        SELECT  f.id,
+                f.title,
+                f.season,
+                f.content,
+                i.img_url
+        FROM    festival f
+            LEFT JOIN   image i
+                ON  f.id    = i.owner_id
+                AND i.type  = 'FESTIVAL'
+                AND i.rep_img_yn = 'Y'
+        WHERE   f.id = #{id}
+            AND f.deleted_at IS NULL
+    </select>
 </mapper>

@@ -10,6 +10,8 @@ public interface FestivalMapper {
 
     List<FestivalDto> selectFestivalList(String season);
 
+    FestivalDto selectFestivalById(int id);
+
     int insertFestival(FestivalDto festivalDto);
 
 }

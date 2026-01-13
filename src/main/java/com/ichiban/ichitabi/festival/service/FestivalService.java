@@ -14,8 +14,11 @@ public class FestivalService {
     private FestivalMapper festivalMapper;
 
     public List<FestivalDto> selectFestivalList(String season) {
-
         return festivalMapper.selectFestivalList(season);
+    }
+
+    public FestivalDto selectFestivalById(int id) {
+        return festivalMapper.selectFestivalById(id);
     }
 
 }
