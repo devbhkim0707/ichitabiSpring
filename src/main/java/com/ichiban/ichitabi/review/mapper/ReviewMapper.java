@@ -23,4 +23,6 @@ public interface ReviewMapper {
     int likeCount(Long reviewId);
 
     int isLiked(Long reviewId, Long userId);
+
+    List<ReviewListDto> searchResult(String keyword);
 }
