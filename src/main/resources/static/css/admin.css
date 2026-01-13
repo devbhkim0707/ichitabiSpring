@@ -95,3 +95,97 @@
 .page-btn.active {
   background-color: #ddd;
 }
+
+/* festival page */
+
+#wrapper-admin {
+  width: 1200px;
+  margin: 120px auto;
+}
+
+.error-message {
+    color: #d32f2f;
+    background: #fdecea;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.admin-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.festival-form {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+  margin-bottom: 30px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.form-group input[type='text'],
+.form-group textarea {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form-group textarea {
+  height: 160px;
+  resize: vertical;
+}
+
+.season-radio {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+}
+
+.season-radio input {
+  margin-right: 6px;
+}
+
+.image-preview {
+  margin-top: 16px;
+  width: 280px;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 330px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.form-actions {
+  text-align: right;
+}
+
+.btn-submit {
+  background-color: #113062;
+  color: #ffffff;
+  padding: 14px 32px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  background-color: #0b244a;
+}
+
