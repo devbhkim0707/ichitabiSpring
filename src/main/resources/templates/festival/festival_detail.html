@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요</title>
+
+  <link rel="stylesheet" th:href="@{/css/reset.css}" />
+  <link rel="stylesheet" th:href="@{/css/common.css}" />
+  <link rel="stylesheet" th:href="@{/css/festival.css}" />
+</head>
+<body>
+<div id="header" th:insert="~{fragment/header::header}"></div>
+<!-- S. 축제 이미지 -->
+<div class="festival-hero">
+  <img th:src="${festival.imgUrl}"
+       th:alt="${festival.title}" />
+</div>
+<!-- E. 축제 이미지 -->
+<div id="wrapper-main" class="festival-detail">
+  <!-- S. 제목 + 계절 -->
+  <div class="festival-header">
+    <h2 class="festival-title"
+        th:text="${festival.title}">축제 이름</h2>
+    <span class="festival-season"
+          th:text="${festival.season}">
+      SPRING
+    </span>
+  </div>
+  <!-- E. 제목 + 계절 -->
+  <!-- S. 축제 설명 -->
+  <div class="festival-content">
+    <p th:text="${festival.content}">
+      축제 설명 텍스트
+    </p>
+  </div>
+  <!-- E. 축제 설명 -->
+</div>
+<div id="footer" th:insert="~{fragment/footer::footer}"></div>
+</body>
+</html>

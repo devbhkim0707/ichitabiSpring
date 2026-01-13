@@ -1,5 +1,6 @@
 package com.ichiban.ichitabi.festival.controller;
 
+import com.ichiban.ichitabi.festival.Season;
 import com.ichiban.ichitabi.festival.dto.FestivalDto;
 import com.ichiban.ichitabi.festival.service.FestivalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +32,33 @@ public class FestivalController {
 
         return "fragment/festival_carousel::festivalCarousel";
     }
+
+    @GetMapping("/list")
+    public String festivalList(
+//            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(required = false) Season season,
+            Model model
+    ) {
+        String seasonStr = (season != null) ? season.name() : "ALL";
+
+        List<FestivalDto> festivalList = festivalService.selectFestivalList(seasonStr);
+
+        model.addAttribute("festivalItems", festivalList);
+        model.addAttribute("season", season);
+
+        return "festival/festival_list";
+    }
+
+    @GetMapping("/detail")
+    public String festivalDetail(
+        @RequestParam int festivalId,
+        Model model
+    ) {
+        FestivalDto festivalDto = festivalService.selectFestivalById(festivalId);
+
+        model.addAttribute("festival", festivalDto);
+
+        return "festival/festival_detail";
+    }
+
 }
