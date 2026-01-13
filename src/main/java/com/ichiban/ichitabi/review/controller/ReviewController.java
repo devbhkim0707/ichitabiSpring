@@ -40,7 +40,6 @@ public class ReviewController {
     }
 
 
-
     // 여행지 추천 리스트 호출
     @GetMapping("/reviews")
     public String reviewsList(Model model) {

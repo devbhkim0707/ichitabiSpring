@@ -5,6 +5,9 @@ const reviewId = likeBtn.dataset.reviewId;
 const token = document.querySelector("meta[name='_csrf']").getAttribute("content");
 const header = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
 
+const editBtn = document.getElementById('edit-btn');
+const deleteBtn = document.getElementById('delete-btn');
+
 async function fetchLikeCount() {
     const res = await fetch(`/review/like?reviewId=${reviewId}`);
     if (!res.ok) throw new Error();
@@ -22,6 +25,8 @@ async function checkLikeStatus() {
         likeBtn.classList.add('on');
     }
 }
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchLikeCount();
