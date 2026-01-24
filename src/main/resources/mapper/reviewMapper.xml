@@ -121,4 +121,55 @@
         GROUP BY r.id, i.type, i.img_url, i.rep_img_yn, u.birthday, u.gender, r.title, r.location
     </select>
 
+    <select id="selectCompanionList">
+        SELECT companion
+        FROM review
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectHashTags">
+        SELECT DISTINCT h.hashtag
+        FROM review r
+        JOIN hashtag h ON r.id = h.review_id
+        WHERE r.user_id = #{userId};
+    </select>
+
+    <select id="findReviewsByPreference" resultType="reviewListDto">
+        SELECT r.id,
+        r.title,
+        r.location,
+        u.gender,
+        u.birthday,
+        i.img_url AS imgUrl,
+        GROUP_CONCAT(DISTINCT h.hashtag) AS hashtags
+        FROM review r
+        JOIN user u ON r.user_id = u.id
+        LEFT JOIN hashtag h ON r.id = h.review_id
+        LEFT JOIN image i ON r.id = i.owner_id
+        AND i.type = 'review'
+        AND i.rep_img_yn = 'Y'
+        WHERE r.user_id != #{userId}
+        AND u.gender = #{gender}
+        <if test="(companions != null and companions.size() > 0) or (hashtags != null and hashtags.size() > 0)">
+            AND (
+            <if test="companions != null and companions.size() > 0">
+                r.companion IN
+                <foreach collection="companions" item="c" open="(" separator="," close=")">
+                    #{c}
+                </foreach>
+            </if>
+            <if test="companions != null and companions.size() > 0 and hashtags != null and hashtags.size() > 0">
+                OR
+            </if>
+            <if test="hashtags != null and hashtags.size() > 0">
+                h.hashtag IN
+                <foreach collection="hashtags" item="h" open="(" separator="," close=")">
+                    #{h}
+                </foreach>
+            </if>
+            )
+        </if>
+        GROUP BY r.id, r.title, r.location, u.gender, u.birthday, i.img_url
+        ORDER BY r.id DESC
+    </select>
 </mapper>

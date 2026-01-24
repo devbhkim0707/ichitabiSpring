@@ -117,7 +117,10 @@
         <p id="nick1" th:text="${nickname}"></p>
         <p>님이 관심 있을만한 게시물</p>
       </div>
-      <ul id="recommend-ul"></ul>
+      <ul class="review-ul">
+        <th:block th:replace="~{fragment/review_item_list :: reviewList(${reviewList})}">
+        </th:block>
+      </ul>
     </div>
     <div
       id="floating-btn"
@@ -126,18 +129,6 @@
     ></div>
     <div id="footer" th:insert="~{fragment/footer::footer}"></div>
 
-    <template id="recommend-template">
-      <li class="recommend-list">
-        <a href="">
-          <p>
-            <img class="photo" />
-          </p>
-          <p class="title"></p>
-          <p class="place"></p>
-          <p class="hash"></p>
-        </a>
-      </li>
-    </template>
     <script type="module" th:src="@{/js/review_detail.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/util.js}"></script>

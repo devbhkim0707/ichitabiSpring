@@ -25,4 +25,10 @@ public interface ReviewMapper {
     int isLiked(Long reviewId, Long userId);
 
     List<ReviewListDto> searchResult(String keyword);
+
+    List<String> selectCompanionList(Long userId);
+
+    List<String> selectHashTags(Long userId);
+
+    List<ReviewListDto> findReviewsByPreference(Long userId, String gender, List<String> companions, List<String> hashtags);
 }
