@@ -38,4 +38,13 @@ public class AdminService {
         return imageMapper.insertImage(imageDto);
     }
 
+    public void updateFestival(FestivalDto festivalDto) {
+        festivalMapper.updateFestival(festivalDto);
+        festivalMapper.updateFestivalImage(festivalDto);
+    }
+
+    public void deleteFestival(Long festivalId) {
+        festivalMapper.deleteFestival(festivalId);
+    }
+
 }
