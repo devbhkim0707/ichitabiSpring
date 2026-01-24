@@ -100,4 +100,26 @@
         WHERE   f.id = #{id}
             AND f.deleted_at IS NULL
     </select>
+
+    <insert id="likeInsert">
+        INSERT INTO festival_likes (user_id, festival_id)
+        VALUES (#{userId}, #{festivalId})
+    </insert>
+
+    <delete id="likeDelete">
+        DELETE FROM festival_likes
+        WHERE user_id = #{userId} AND festival_id = #{festivalId}
+    </delete>
+
+    <select id="likeCount">
+        SELECT COUNT(id)
+        FROM festival_likes
+        WHERE festival_id = #{festivalId}
+    </select>
+
+    <select id="isLiked">
+        SELECT COUNT(*)
+        FROM festival_likes
+        WHERE festival_id = #{festivalId} AND user_id = #{userId}
+    </select>
 </mapper>
