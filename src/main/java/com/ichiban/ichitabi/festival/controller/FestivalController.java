@@ -21,14 +21,15 @@ public class FestivalController {
 
     @GetMapping("/")
     public String festivalPage(
-            @RequestParam(defaultValue = "ALL") String season,
+            @RequestParam(required = false) Season season,
             Model model
     ) {
-        List<FestivalDto> festivalItems =
-                festivalService.selectFestivalList(season);
+        Season seasonEnum = (season != null) ? season : Season.ALL;
+
+        List<FestivalDto> festivalItems = festivalService.selectFestivalList(seasonEnum);
 
         model.addAttribute("festivalItems", festivalItems);
-        model.addAttribute("currentSeason", season);
+        model.addAttribute("currentSeason", seasonEnum);
 
         return "fragment/festival_carousel::festivalCarousel";
     }
@@ -39,9 +40,9 @@ public class FestivalController {
             @RequestParam(required = false) Season season,
             Model model
     ) {
-        String seasonStr = (season != null) ? season.name() : "ALL";
+        Season seasonEnum = (season != null) ? season : Season.ALL;
 
-        List<FestivalDto> festivalList = festivalService.selectFestivalList(seasonStr);
+        List<FestivalDto> festivalList = festivalService.selectFestivalList(seasonEnum);
 
         model.addAttribute("festivalItems", festivalList);
         model.addAttribute("season", season);
@@ -51,7 +52,7 @@ public class FestivalController {
 
     @GetMapping("/detail")
     public String festivalDetail(
-        @RequestParam int festivalId,
+        @RequestParam Long festivalId,
         Model model
     ) {
         FestivalDto festivalDto = festivalService.selectFestivalById(festivalId);

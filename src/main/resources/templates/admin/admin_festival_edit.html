@@ -21,55 +21,83 @@
     </div>
     <form
         class="festival-form"
-        th:action="@{/admin/festival/new}"
+        th:action="${isEditing}
+        ? @{/admin/festival/edit/{id}(id=${festival.id})}
+        : @{/admin/festival/new}"
         method="post"
     >
         <div class="form-group">
             <label>축제 제목</label>
-            <input type="text" name="title" placeholder="축제 제목을 입력하세요" />
+            <input
+                type="text"
+                name="title"
+                placeholder="축제 제목을 입력하세요"
+                th:value="${festival.title}"
+            />
         </div>
         <div class="form-group">
-            <label>시즌</label>
+            <label>계절</label>
             <div class="season-radio">
-                <label><input type="radio" name="season" value="SPRING" /> 봄</label>
-                <label><input type="radio" name="season" value="SUMMER" /> 여름</label>
-                <label><input type="radio" name="season" value="FALL" /> 가을</label>
-                <label><input type="radio" name="season" value="WINTER" /> 겨울</label>
+                <label>
+                    <input type="radio"
+                           name="season"
+                           value="SPRING"
+                           th:checked="${festival.season == T(com.ichiban.ichitabi.festival.Season).SPRING}" />
+                    봄
+                </label>
+                <label>
+                    <input type="radio"
+                           name="season"
+                           value="SUMMER"
+                           th:checked="${festival.season == T(com.ichiban.ichitabi.festival.Season).SUMMER}" />
+                    여름
+                </label>
+                <label>
+                    <input type="radio"
+                           name="season"
+                           value="FALL"
+                           th:checked="${festival.season == T(com.ichiban.ichitabi.festival.Season).FALL}" />
+                    가을
+                </label>
+                <label>
+                    <input type="radio"
+                           name="season"
+                           value="WINTER"
+                           th:checked="${festival.season == T(com.ichiban.ichitabi.festival.Season).WINTER}" />
+                    겨울
+                </label>
             </div>
         </div>
         <div class="form-group">
             <label>축제 설명</label>
             <textarea
-                    name="content"
-                    placeholder="축제에 대한 설명을 입력하세요"
+                name="content"
+                placeholder="축제에 대한 설명을 입력하세요"
+                th:text="${festival.content}"
             ></textarea>
         </div>
         <div class="form-group">
             <label>이미지 URL</label>
             <input
-                    type="text"
-                    name="imgUrl"
-                    id="imgUrl"
-                    placeholder="https://example.com/image.jpg"
+                type="text"
+                name="imgUrl"
+                id="imgUrl"
+                placeholder="https://example.com/image.jpg"
+                th:value="${festival.imgUrl}"
             />
-            <div class="image-preview">
-                <img id="preview-img" />
+
+            <div class="image-preview" th:if="${festival.imgUrl}">
+                <img id="preview-img" th:src="${festival.imgUrl}" />
             </div>
         </div>
         <div class="form-actions">
-            <button type="submit" class="btn-submit">등록하기</button>
+            <button type="submit" class="btn-submit"
+                th:text="${isEditing ? '수정하기' : '등록하기'}">
+            </button>
         </div>
     </form>
 </div>
 <div id="footer" th:insert="~{fragment/footer::footer}"></div>
 
-<script>
-    const input = document.getElementById('imgUrl');
-    const preview = document.getElementById('preview-img');
-
-    input.addEventListener('input', () => {
-      preview.src = input.value;
-    });
-</script>
 </body>
 </html>

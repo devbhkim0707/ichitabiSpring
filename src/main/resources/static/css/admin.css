@@ -1,22 +1,28 @@
 @charset "utf-8";
 
-#board-posts {
+/* =========================
+   공통 wrapper
+========================= */
+
+#board-posts,
+#board-users,
+#wrapper-admin {
   width: 1200px;
   margin: 0 auto;
-  padding: 100px;
+  padding: 60px 40px;
+  box-sizing: border-box; /* overflow 방지 */
 }
 
-#board-users {
-  width: 1200px;
-  margin: 0 auto;
-  padding: 100px;
-}
+/* =========================
+   테이블 공통
+========================= */
 
 .post-list {
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #ddd;
   margin-bottom: 20px;
+  table-layout: fixed; /* 컬럼 폭 안정화 */
 }
 
 .post-list th,
@@ -24,98 +30,215 @@
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+.post-list .season-th,
+.post-list .buttons-th,
+.post-list .season-td,
+.post-list .buttons-td {
+  width: 100px;
+}
+
+.post-list .date-th,
+.post-list .date-td {
+  width: 140px;
 }
 
 .post-list th {
   background-color: #f2f2f2;
+  font-weight: 600;
 }
+
+/* =========================
+   축제 관리 테이블 헤더
+========================= */
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* 계절 select */
+.filter-box select {
+  padding: 8px 14px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+/* 축제 추가 버튼 */
+.btn-add {
+  padding: 10px 18px;
+  background-color: #113062;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn-add:hover {
+  background-color: #0b244a;
+}
+
+/* =========================
+   축제 이미지 컬럼
+========================= */
+
+.post-list th.thumb,
+.post-list td.thumb {
+  width: 90px;
+  min-width: 90px;
+}
+
+.post-list td.thumb {
+  padding: 6px;
+}
+
+.post-list td.thumb img {
+  width: 78px;
+  height: 78px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto;
+  background-color: #f5f5f5;
+}
+
+/* =========================
+   날짜 컬럼
+========================= */
 
 .date {
   display: flex;
   justify-content: space-around;
+  font-size: 14px;
 }
 
-.remove-btn {
-  width: 50px;
-  height: 20px;
-  border: 1px solid black;
-  border-radius: 5px;
+/* =========================
+   버튼
+========================= */
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
 }
 
+.action-buttons a,
+.action-buttons button {
+  display: block;
+  height: 24px;
+  width: 24px;
+  text-indent: -999999px;
+  background-size: cover;
+  opacity: 0.6;
+
+}
+
+.action-buttons a:hover,
+.action-buttons button:hover {
+  opacity: 1.0;
+}
+
+.action-buttons a {
+  background-image: url('/icons/edit.png');
+}
+
+.action-buttons button {
+  background-image: url('/icons/delete.png');
+}
+
+
+.remove-btn,
 .delete-btn {
   width: 50px;
-  height: 20px;
-  border: 1px solid black;
+  height: 22px;
+  border: 1px solid #999;
   border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 13px;
 }
+
+.remove-btn:hover,
+.delete-btn:hover {
+  background-color: #eee;
+}
+
+/* =========================
+   Pagination
+========================= */
 
 .page-nav {
   text-align: center;
+  margin-top: 20px;
 }
 
+.page-nav a,
 .page-nav button {
   display: inline-block;
-  margin: 0 5px;
-  padding: 5px 10px;
-  text-decoration: none;
+  margin: 0 4px;
+  padding: 6px 12px;
   border: 1px solid #ddd;
   border-radius: 5px;
   color: #333;
+  font-size: 14px;
 }
 
-.page-nav .page {
-  background-color: #f9f7f7;
-}
-
+.page-nav a:hover,
 .page-nav button:hover {
-  background-color: #ddd;
+  background-color: #eee;
 }
 
 .page-nav .prev,
 .page-nav .next {
-  font-weight: bold;
+  font-weight: 600;
 }
 
+.page-btn.active,
+.page.active {
+  background-color: #ddd;
+  font-weight: 700;
+}
+
+/* =========================
+   일괄 삭제 버튼
+========================= */
+
 #bulk-delete {
-  width: 100px;
-  height: 30px;
-  margin: 30px auto;
+  width: 120px;
+  height: 34px;
+  margin: 30px auto 0;
   border: 1px solid #ddd;
   border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 #bulk-delete:hover {
   background-color: #ddd;
 }
 
-.page.active,
-.page-btn.active {
-  background-color: #ddd;
-}
-
-/* festival page */
-
-#wrapper-admin {
-  width: 1200px;
-  margin: 120px auto;
-}
-
-.error-message {
-    color: #d32f2f;
-    background: #fdecea;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 15px;
-}
+/* =========================
+   Festival Admin Page
+========================= */
 
 .admin-title {
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
+
+/* =========================
+   Festival Form
+========================= */
 
 .festival-form {
   background-color: #ffffff;
@@ -159,6 +282,10 @@
   margin-right: 6px;
 }
 
+/* =========================
+   이미지 미리보기
+========================= */
+
 .image-preview {
   margin-top: 16px;
   width: 280px;
@@ -172,6 +299,10 @@
   border: 1px solid #ddd;
 }
 
+/* =========================
+   Form Action
+========================= */
+
 .form-actions {
   text-align: right;
 }
@@ -183,9 +314,21 @@
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
+  border: none;
 }
 
 .btn-submit:hover {
   background-color: #0b244a;
 }
 
+/* =========================
+   Error Message
+========================= */
+
+.error-message {
+  color: #d32f2f;
+  background: #fdecea;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}

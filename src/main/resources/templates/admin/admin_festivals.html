@@ -1,82 +1,125 @@
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
     <title>ICHITABI - 축제 목록 관리</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" th:href="@{/css/reset.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
-    <link rel="stylesheet" th:href="@{/css/admin.css}" />
-  </head>
 
-  <body>
-    <div id="header" th:insert="~{fragment/header::header}"></div>
-    <div class="wrapper">
-      <div id="board-users">
-        <table class="post-list">
-          <thead>
-            <tr>
-              <th>닉네임</th>
-              <th>이메일</th>
-              <th>작성 글 수</th>
-              <th>가입일</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>gildong</td>
-              <td>gildong@gmail.com</td>
-              <td>5</td>
-              <td>
-                <div class="date">
-                  2025.07.09
-                  <button class="delete-btn">탈퇴</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>gildong</td>
-              <td>gildong@gmail.com</td>
-              <td>5</td>
-              <td>
-                <div class="date">
-                  2025.07.09
-                  <button class="delete-btn">탈퇴</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>gildong</td>
-              <td>gildong@gmail.com</td>
-              <td>5</td>
-              <td>
-                <div class="date">
-                  2025.07.09
-                  <button class="delete-btn">탈퇴</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <a th:href="@{/admin/festival/new}">축제 추가 등록</a>
-        <div class="page-nav">
-          <button href="#" class="prev">이전</button>
-          <button href="#" class="page-btn active">1</button>
-          <button href="#" class="page-btn">2</button>
-          <button href="#" class="page-btn">3</button>
-          <button href="#" class="next">다음</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <link rel="stylesheet" th:href="@{/css/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin.css}"/>
+</head>
+
+<body>
+<div id="header" th:insert="~{fragment/header::header}"></div>
+
+<div class="wrapper">
+    <div id="board-users">
+        <!-- 상단 영역 (필터 + 등록 버튼) -->
+        <div class="board-header">
+            <div class="filter-box">
+                <select id="season-select">
+                    <option value="">전체</option>
+                    <option value="SPRING"
+                            th:selected="${season?.name() == 'SPRING'}">봄
+                    </option>
+                    <option value="SUMMER"
+                            th:selected="${season?.name() == 'SUMMER'}">여름
+                    </option>
+                    <option value="FALL"
+                            th:selected="${season?.name() == 'FALL'}">가을
+                    </option>
+                    <option value="WINTER"
+                            th:selected="${season?.name() == 'WINTER'}">겨울
+                    </option>
+                </select>
+            </div>
+            <a class="btn-add" th:href="@{/admin/festival/new}">
+                축제 추가 등록
+            </a>
         </div>
-      </div>
+        <!-- 목록 테이블 -->
+        <table class="post-list">
+            <thead>
+            <tr>
+                <th class="thumb">사 진</th>
+                <th>제 목</th>
+                <th class="season-th">계 절</th>
+                <th class="date-th">등록일</th>
+                <th class="date-th">수정일</th>
+                <th class="buttons-th">관 리</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="festival : ${festivalsList}">
+                <td class="thumb">
+                    <img th:src="${festival.imgUrl}"
+                         alt="축제 이미지"
+                    />
+                </td>
+                <td th:text="${festival.title}"></td>
+                <td th:text="${festival.season}" class="season-td"></td>
+                <td th:text="${#temporals.format(festival.createdAt, 'yyyy-MM-dd')}" class="date-td">
+                </td>
+                <td th:text="${#temporals.format(festival.updatedAt, 'yyyy-MM-dd')}" class="date-td">
+                </td>
+                <td class="buttons-td">
+                    <div class="action-buttons">
+                        <a th:href="@{/admin/festival/edit/{id}(id=${festival.id})}">수정</a>
+                        <button
+                                type="button"
+                                class="btn-delete-festival"
+                                th:data-id="${festival.id}">
+                            삭제
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- 데이터 없을 때 -->
+            <tr th:if="${#lists.isEmpty(festivalsList)}">
+                <td colspan="6" style="text-align:center;">
+                    등록된 축제가 없습니다.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- 페이지네이션 -->
+        <div class="page-nav" th:if="${pageHandler.totalCnt > 0}">
+
+            <!-- 이전 -->
+            <a class="prev"
+               th:if="${!pageHandler.firstPage}"
+               th:href="@{/admin/festival(page=${pageHandler.beginPage - 1},season=${season})}">
+                이전
+            </a>
+
+            <!-- 페이지 번호 -->
+            <th:block th:each="i : ${#numbers.sequence(pageHandler.beginPage, pageHandler.endPage)}">
+                <a class="page-btn"
+                   th:href="@{/admin/festival(page=${i}, season=${season})}"
+                   th:text="${i}"
+                   th:classappend="${i == pageHandler.page} ? 'active'">
+                </a>
+            </th:block>
+
+            <!-- 다음 -->
+            <a class="next"
+               th:if="${!pageHandler.lastPage}"
+               th:href="@{/admin/festival(page=${pageHandler.endPage + 1},season=${season})}">
+                다음
+            </a>
+        </div>
+
     </div>
-    <div id="footer" th:insert="~{fragment/footer::footer}"></div>
-    <script th:src="@{/js/common.js}"></script>
-    <script th:src="@{/js/util.js}"></script>
-    <script th:src="@{/js/admin.js}"></script>
-  </body>
+</div>
+
+<div id="footer" th:insert="~{fragment/footer::footer}"></div>
+
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/admin.js}"></script>
+</body>
 </html>
