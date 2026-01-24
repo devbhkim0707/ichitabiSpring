@@ -5,6 +5,7 @@ import com.ichiban.ichitabi.festival.dto.FestivalDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface FestivalMapper {
@@ -24,5 +25,13 @@ public interface FestivalMapper {
     FestivalDto selectFestivalById(Long id);
 
     int insertFestival(FestivalDto festivalDto);
+
+    int likeInsert(Map map);
+
+    int likeDelete(Map map);
+
+    int likeCount(Long festivalId);
+
+    int isLiked(Long festivalId, Long userId);
 
 }

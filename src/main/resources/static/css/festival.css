@@ -116,6 +116,12 @@
   color: #121212;
 }
 
+.festival-detail .festival-header-right {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
 .festival-detail .festival-season {
   font-size: 14px;
   font-weight: 600;
@@ -123,6 +129,31 @@
   border-radius: 20px;
   color: #fff;
   background-color: #121212;
+}
+
+.festival-detail #like {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.7;
+}
+
+.festival-detail #like-btn {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  text-indent: -999999px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.festival-detail #like-btn {
+  background-image: url(/icons/heart.png);
+  background-size: 24px auto;
+}
+
+.festival-detail #like-btn.on {
+  background-image: url(/icons/redheart.png);
 }
 
 /* 설명 */

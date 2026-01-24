@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FestivalService {
@@ -28,6 +29,22 @@ public class FestivalService {
 
     public FestivalDto selectFestivalById(Long id) {
         return festivalMapper.selectFestivalById(id);
+    }
+
+    public int likeInsert(Map map) {
+        return festivalMapper.likeInsert(map);
+    };
+
+    public int likeDelete(Map map) {
+        return festivalMapper.likeDelete(map);
+    }
+
+    public int likeCount(Long festivalId) {
+        return festivalMapper.likeCount(festivalId);
+    }
+
+    public boolean isLiked(Long festivalId, Long userId) {
+        return festivalMapper.isLiked(festivalId, userId) > 0;
     }
 
 }
