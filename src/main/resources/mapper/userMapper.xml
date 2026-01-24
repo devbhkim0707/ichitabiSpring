@@ -36,4 +36,10 @@
         FROM user
         WHERE email = #{email}
     </select>
+
+    <select id="findGender">
+        SELECT gender
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
 </mapper>

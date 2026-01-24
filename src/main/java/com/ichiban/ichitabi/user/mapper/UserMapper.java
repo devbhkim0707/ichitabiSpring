@@ -11,6 +11,7 @@ public interface UserMapper {
     UserDto findByEmail(String email);
     Long findUserId(String email);
     String findNickname(String email);
+    String findGender(Long userId);
 }
 
 

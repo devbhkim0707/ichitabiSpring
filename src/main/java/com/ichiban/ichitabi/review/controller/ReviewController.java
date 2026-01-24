@@ -142,4 +142,13 @@ public class ReviewController {
         return "reviews/search_result";
     }
 
+    @GetMapping("/recommend")
+    public String recommendReview(Principal principal, Model model) {
+        Long userId = userService.findUserId(principal.getName());
+        List<ReviewListDto> reviewListDtos = reviewService.recommendReview(userId);
+
+        model.addAttribute("reviewList", reviewListDtos);
+
+        return "reviews/reviews";
+    }
 }
