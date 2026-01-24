@@ -7,11 +7,13 @@ import java.util.List;
 
 @Data
 public class ReviewSaveDto {
+    private Long id;
     private String title;
     private int rating;
     private String date;
     private String companion;
     private String content;
+    private String location;
     private String hashtags;
     private List<String> hashtagList;
 

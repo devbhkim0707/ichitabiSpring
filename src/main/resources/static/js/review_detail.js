@@ -8,6 +8,32 @@ const header = document.querySelector("meta[name='_csrf_header']").getAttribute(
 const editBtn = document.getElementById('edit-btn');
 const deleteBtn = document.getElementById('delete-btn');
 
+// 수정 버튼
+if (editBtn) {
+    editBtn.addEventListener('click', () => {
+        window.location.href = `/review/edit/${reviewId}`;
+    });
+}
+
+// 삭제 버튼
+if (deleteBtn) {
+    deleteBtn.addEventListener('click', async () => {
+        if (confirm('정말 삭제하시겠습니까?\n삭제된 데이터는 관리자가 보관하게 됩니다.')) {
+            const res = await fetch(`/review/delete/${reviewId}`, {
+                method: 'POST',
+                headers: { [header]: token } // CSRF 토큰 필요
+            });
+
+            if (res.ok) {
+                alert('삭제되었습니다.');
+                window.location.href = '/review/reviews'; // 목록으로 이동
+            } else {
+                alert('삭제 실패했습니다.');
+            }
+        }
+    });
+}
+
 async function fetchLikeCount() {
     const res = await fetch(`/review/like?reviewId=${reviewId}`);
     if (!res.ok) throw new Error();

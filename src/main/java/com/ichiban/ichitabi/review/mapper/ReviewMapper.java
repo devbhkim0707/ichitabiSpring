@@ -2,7 +2,9 @@ package com.ichiban.ichitabi.review.mapper;
 
 import com.ichiban.ichitabi.review.dto.ReviewDetailDto;
 import com.ichiban.ichitabi.review.dto.ReviewListDto;
+import com.ichiban.ichitabi.review.dto.ReviewSaveDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ public interface ReviewMapper {
 
     ReviewDetailDto selectReviewDetail(Long id);
 
+    // 좋아요
     int likeInsert(Map map);
 
     int likeDelete(Map map);
@@ -25,4 +28,14 @@ public interface ReviewMapper {
     int isLiked(Long reviewId, Long userId);
 
     List<ReviewListDto> searchResult(String keyword);
+
+    void insertReview(ReviewSaveDto dto, @Param("userId") Long userId);
+
+    void updateReview(ReviewSaveDto dto);
+
+    void softDelete(Long id);
+
+    void insertHashtag(@Param("reviewId") Long reviewId, @Param("hashtag") String hashtag);
+
+    void deleteHashtagsByReviewId(Long reviewId);
 }

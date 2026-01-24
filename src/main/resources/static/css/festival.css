@@ -1,0 +1,140 @@
+#wrapper-main {
+  width: 1200px;
+  margin: 0 auto 120px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 60px 0 30px;
+}
+
+.filter-box {
+  text-align: right;
+  margin-bottom: 30px;
+}
+
+.filter-box select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.festival-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.festival-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  background-color: #fff;
+  transition: transform 0.2s ease;
+}
+
+.festival-card:hover {
+  transform: translateY(-6px);
+}
+
+.festival-img img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.festival-info {
+  padding: 16px;
+}
+
+.festival-info .season {
+  font-size: 14px;
+  color: #113062;
+  font-weight: 600;
+}
+
+.festival-info h3 {
+  font-size: 18px;
+  color: #555;
+  margin: 8px 0;
+  font-weight: 600;
+}
+
+.festival-info p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.pagination {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.pagination a {
+  margin: 0 6px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #666;
+}
+
+.pagination a.active {
+  background-color: #113062;
+  color: #fff;
+}
+
+/* =========================
+   Festival Detail Page
+   ========================= */
+
+/* hero 이미지 */
+.festival-hero img {
+  width: 100%;
+  height: calc(100vh - 120px);
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+
+/* 제목 + 계절 */
+.festival-detail .festival-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.festival-detail .festival-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #121212;
+}
+
+.festival-detail .festival-season {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: #fff;
+  background-color: #121212;
+}
+
+/* 설명 */
+.festival-detail .festival-content p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #333;
+}
+
+/* 첫 글자 강조 */
+.festival-detail .festival-content p::first-letter {
+  font-size: 32px;
+  font-weight: 700;
+  margin-right: 4px;
+}
