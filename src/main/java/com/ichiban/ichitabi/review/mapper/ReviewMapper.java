@@ -29,6 +29,7 @@ public interface ReviewMapper {
 
     List<ReviewListDto> searchResult(String keyword);
 
+
     void insertReview(ReviewSaveDto dto, @Param("userId") Long userId);
 
     void updateReview(ReviewSaveDto dto);
@@ -38,4 +39,11 @@ public interface ReviewMapper {
     void insertHashtag(@Param("reviewId") Long reviewId, @Param("hashtag") String hashtag);
 
     void deleteHashtagsByReviewId(Long reviewId);
+
+    List<String> selectCompanionList(Long userId);
+
+    List<String> selectHashTags(Long userId);
+
+    List<ReviewListDto> findReviewsByPreference(Long userId, String gender, List<String> companions, List<String> hashtags);
+
 }

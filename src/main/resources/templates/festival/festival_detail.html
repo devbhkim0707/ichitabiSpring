@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <title>ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -27,10 +29,16 @@
   <div class="festival-header">
     <h2 class="festival-title"
         th:text="${festival.title}">축제 이름</h2>
-    <span class="festival-season"
-          th:text="${festival.season}">
-      SPRING
-    </span>
+    <div class="festival-header-right">
+      <span class="festival-season"
+            th:text="${festival.season}">
+        SPRING
+      </span>
+      <div id="like">
+        <button id="like-btn" th:data-festival-id="${festival.id}">좋아요</button>
+        <p id="like-count"></p>
+      </div>
+    </div>
   </div>
   <!-- E. 제목 + 계절 -->
   <!-- S. 축제 설명 -->
@@ -43,6 +51,7 @@
 </div>
 <div id="footer" th:insert="~{fragment/footer::footer}"></div>
 <script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/festival.js}"></script>
 <script th:src="@{/js/header.js}"></script>
 </body>
 </html>

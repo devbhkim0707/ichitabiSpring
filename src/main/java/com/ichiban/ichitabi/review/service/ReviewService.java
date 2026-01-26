@@ -4,6 +4,7 @@ import com.ichiban.ichitabi.review.dto.ReviewDetailDto;
 import com.ichiban.ichitabi.review.dto.ReviewListDto;
 import com.ichiban.ichitabi.review.dto.ReviewSaveDto;
 import com.ichiban.ichitabi.review.mapper.ReviewMapper;
+import com.ichiban.ichitabi.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,9 @@ public class ReviewService {
 
     @Autowired
     private ReviewMapper reviewMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Transactional(readOnly = true)
     public List<ReviewListDto> selectReviewList() {
@@ -53,6 +57,7 @@ public class ReviewService {
         return reviewMapper.searchResult(keyword);
     }
 
+
     @Transactional
     public Long saveOrUpdate(ReviewSaveDto dto, Long userId) {
         if (dto.getId() == null) {
@@ -76,5 +81,14 @@ public class ReviewService {
         reviewMapper.softDelete(id);
     }
 
+
+
+    public List<ReviewListDto> recommendReview(Long userId) {
+        String gender = userMapper.findGender(userId);
+        List<String> companions = reviewMapper.selectCompanionList(userId);
+        List<String> hashtags = reviewMapper.selectHashTags(userId);
+
+        return reviewMapper.findReviewsByPreference(userId, gender, companions, hashtags);
+    }
 
 }

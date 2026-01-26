@@ -145,6 +145,7 @@ public class ReviewController {
         return "reviews/search_result";
     }
 
+
     // 저장 및 수정 로직 (작성 페이지에서 '작성' 버튼 클릭 시 호출)
     @PostMapping("/write")
     @ResponseBody
@@ -195,5 +196,16 @@ public class ReviewController {
         return ResponseEntity.status(403).build();
     }
 
+
+
+    @GetMapping("/recommend")
+    public String recommendReview(Principal principal, Model model) {
+        Long userId = userService.findUserId(principal.getName());
+        List<ReviewListDto> reviewListDtos = reviewService.recommendReview(userId);
+
+        model.addAttribute("reviewList", reviewListDtos);
+
+        return "reviews/reviews";
+    }
 
 }

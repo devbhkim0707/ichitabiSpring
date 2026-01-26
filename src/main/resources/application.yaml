@@ -5,6 +5,8 @@ spring:
   devtools:
     livereload:
       enabled: true
+    restart:
+      enabled: true
 
   config:
     import: optional:classpath:application-env.properties
@@ -24,8 +26,8 @@ spring:
 
 file:
   upload:
-    itemImgLocation: C:/shop/item
-    uploadPath: file:///C:/shop/
+    itemImgLocation: src/main/resources/static/images/user
+    uploadPath: src/main/resources/static/images/user
 
 
 mybatis:
