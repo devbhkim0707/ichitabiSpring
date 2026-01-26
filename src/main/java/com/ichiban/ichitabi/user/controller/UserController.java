@@ -102,16 +102,12 @@ public class UserController {
             @RequestParam("profileImage") MultipartFile profileImage
     ) {
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult);
-            System.out.println("에러ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ");
             return "/user/mypage_edit";
         }
 
         try {
             userService.updateUserInfo(principal.getName(), userUpdate, profileImage);
         } catch (Exception e) {
-            System.out.println("예외ㅣㅣㅣㅣ" + e.getMessage());
-
             return "/user/mypage_edit";
         }
 
