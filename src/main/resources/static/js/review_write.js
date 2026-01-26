@@ -5,6 +5,7 @@ const stars = document.querySelectorAll('.star');
 const starContent = document.getElementById('star-content');
 const ratingsText = ['최악', '그저그럼', '보통', '좋음', '훌륭함'];
 
+// 별점
 function updateStars(rating) {
   stars.forEach((star, i) => {
     star.textContent =
@@ -51,6 +52,7 @@ companionBtn.forEach((button) => {
   });
 });
 
+// 해시태그
 const hashtagBtn = document.querySelectorAll('.hashtag-btn');
 const tagSselectedBtn = new Set(); // Set을 사용하여 중복 선택 방지
 
@@ -189,13 +191,150 @@ contentInput.addEventListener('input', () => {
   contentCount.textContent = contentInput.value.length;
 });
 
-// 작성하기 버튼 클릭시 확인창 보여주기
+// 수정 -> 데이터 채우기
+document.addEventListener('DOMContentLoaded', () => {
+  // write.html 하단에 정의한 isEditMode와 existingData 변수 사용
+  if (typeof isEditMode !== 'undefined' && isEditMode && existingData) {
+    console.log("복구 데이터 확인 : " + existingData);
+
+    // 기본 텍스트들
+    nameInput.value = existingData.title || '';
+    contentInput.value = existingData.content || '';
+
+    // 별점 복구
+    selectedRating = existingData.rating || 0;
+    updateStars(selectedRating);
+
+    // 시기 복구 - 제미나이 도움 받았지만 안받아와요 ㅜㅜㅜ
+    if (existingData.date) {
+          // 숫자만 추출하는 정규식 사용 (가장 안전함)
+          // 예: "2025년 - 05월" -> ["2025", "05"]
+          const dateNumbers = existingData.date.match(/\d+/g);
+
+          if (dateNumbers && dateNumbers.length >= 2) {
+            const yearVal = dateNumbers[0]; // "2025"
+            const monthVal = parseInt(dateNumbers[1]); // "05" -> 5 (숫자로 변환해서 매칭)
+
+            const yearSelect = document.querySelector('select[name="year"]');
+            const monthSelect = document.querySelector('select[name="month"]');
+
+            if (yearSelect) yearSelect.value = yearVal;
+            if (monthSelect) monthSelect.value = monthVal.toString(); // "5"로 변환해서 매칭
+          }
+        }
+
+    // 동행 버튼 복구
+    const companionMap = { 1: "비즈니스", 2: "단독", 3: "가족", 4: "친구", 5: "연인" };
+    const targetCompanion = companionMap[existingData.companion];
+
+    companionBtn.forEach(btn => {
+        if (btn.dataset.value === targetCompanion) {
+            btn.click(); // 강제 클릭 이벤트 발생 (selected 클래스 추가됨)
+        }
+    });
+
+    // 해시태그 복구
+    if (existingData.hashtagList && existingData.hashtagList.length > 0) {
+      existingData.hashtagList.forEach(tag => {
+        const trimmedTag = tag.trim();
+        // 상단 해시태그 확인
+        let matchedBtn = Array.from(hashtagBtn).find(b => b.dataset.value === trimmedTag);
+
+        if (matchedBtn) {
+          matchedBtn.click(); // 이미 있는 버튼이면 클릭 처리
+        } else {
+          // 직접 입력했던 해시태그 추가
+          hashtagInput.value = trimmedTag;
+          addHashtag();
+        }
+      });
+    }
+
+    // 카운트 초기화
+    nameCount.textContent = nameInput.value.length;
+    contentCount.textContent = contentInput.value.length;
+  }
+});
+
+
+// 작성하기 버튼 클릭시 확인창 보여주기 - 데이터 전송
 function confirmAction() {
-  if (confirm('작성 하시겠습니까?')) {
-    // 나중에 확인 버튼을 클릭했을 때 데이터 저장 코드
-    alert('게시물 업로드를 시작하겠습니다!');
+
+  const getCsrfFromCookie = () => {
+          const name = "XSRF-TOKEN";
+          const value = "; " + document.cookie;
+          const parts = value.split("; " + name + "=");
+          if (parts.length === 2) return parts.pop().split(";").shift();
+  };
+
+  const actionText = isEditMode ? '수정' : '작성';
+
+  if (confirm(`${actionText}하시겠습니까?`)) {
+
+    const csrfToken = getCsrfFromCookie();
+    // CookieCsrfTokenRepository를 쓸 때는 헤더명이 보통 X-XSRF-TOKEN 입니다.
+    const csrfHeader = "X-XSRF-TOKEN";
+
+    const year = document.getElementsByName('year')[0].value;
+    const month = document.getElementsByName('month')[0].value;
+
+    if (year === 'none' || month === 'none') {
+        alert("여행 시기를 선택해주세요!");
+        return;
+    }
+
+    const reviewData = {
+          id: isEditMode ? existingData.id : null, // 수정 -> 기존 ID를 포함
+          title: document.getElementById('review-name').value,
+          rating: selectedRating,
+          date: `${year}년 - ${month}월`,
+          companion: selectedBtn ? selectedBtn.dataset.value : '단독',
+          content: document.getElementById('review-content').value,
+          hashtags: [...tagSselectedBtn, ...hashtags]
+        };
+
+    console.log("================ [전송 데이터 확인] ================");
+    console.log("전체 객체:", reviewData);
+    console.table(reviewData); // 테이블 형태로 예쁘게 출력
+    console.log("해시태그 목록:", reviewData.hashtags.join(", "));
+    console.log("=================================================");
+
+    // 데이터 검증
+    if(!reviewData.title || reviewData.rating === 0) {
+      alert("장소 이름과 평점을 입력해주세요!");
+      return;
+    }
+
+    const headers = { 'Content-Type': 'application/json' };
+    if (csrfToken) {
+       headers[csrfHeader] = csrfToken;
+    }
+
+    // 서버 전송
+    fetch('/review/write', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify(reviewData)
+        })
+        .then(response => {
+                if (!response.ok) {
+                   if(response.status === 403) console.error("CSRF 토큰 혹은 권한 오류입니다.");
+                   throw new Error('저장 실패');
+                }
+                return response.json(); // 서버에서 저장된 게시글의 ID 받아온다
+            })
+            .then(data => {
+                alert(`${actionText}이 완료되었습니다!`);
+                // 저장/수정 후 방금 작성한 글의 상세 페이지로 이동
+                const moveId = (typeof data === 'object') ? data.id : data;
+                location.href = '/review/detail/' + moveId;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('처리 중 오류가 발생했습니다.');
+            });
+
   } else {
-    // 나중에 취소 버튼을 클릭했을 때 이전으로 그냥 아무것도 안거드는
     alert('작성을 이어서 해주세요!');
   }
 }
