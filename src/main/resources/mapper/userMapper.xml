@@ -25,6 +25,27 @@
         AND     deleted_at IS NULL
     </select>
 
+    <select id="findMyPageInfo" parameterType="Long" resultType="userMyPageDto">
+        SELECT  u.email, u.nickname, u.birthday, u.gender, i.img_url
+        FROM    user u
+            LEFT JOIN   image i
+                ON  u.id    = i.owner_id
+                AND i.type  = 'USER'
+                AND i.rep_img_yn = 'Y'
+        WHERE   u.id = #{userId}
+            AND u.deleted_at IS NULL
+    </select>
+
+    <update id="updateUserInfo">
+        UPDATE  user
+            SET     nickname = #{userDto.nickname},
+                    updated_at = CURRENT_TIMESTAMP
+            <if test="userDto.pw != null">
+                , pw = #{userDto.pw}
+            </if>
+        WHERE   id = #{userId}
+    </update>
+
     <select id="findUserId">
         SELECT id
         FROM user

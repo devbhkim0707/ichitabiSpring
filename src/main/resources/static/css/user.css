@@ -206,3 +206,205 @@
   border-radius: 8px;
   margin-top: 30px;
 }
+
+#mypage-container {
+  width: 500px;
+  margin: 0 auto 150px;
+  color: #212121;
+}
+
+/* 프로필 박스 */
+.profile-box {
+  display: flex;
+  align-items: center;
+  padding: 30px 20px;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  margin-bottom: 30px;
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.profile-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
+.profile-info .nickname {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.profile-info .email {
+  font-size: 14px;
+  color: #666;
+}
+
+/* 정보 박스 */
+.info-box {
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row .label {
+  font-size: 15px;
+  color: #555;
+}
+
+.info-row .value {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* 버튼 */
+.mypage-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mypage-btn {
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 16px;
+  background-color: #113062;
+  color: white;
+  border-radius: 8px;
+  border: 2px solid #212121;
+}
+
+.mypage-btn:hover {
+  opacity: 0.9;
+}
+
+.mypage-btn.outline {
+  background-color: white;
+  color: #113062;
+}
+
+#mypage-container {
+  width: 500px;
+  margin: 0 auto 150px;
+  color: #212121;
+}
+
+/* 프로필 */
+.profile-edit-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.profile-img-edit {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+}
+
+.profile-img-edit img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
+.profile-img-edit .edit-text {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 0 0 50% 50%;
+  padding: 6px 0;
+}
+
+/* 수정 가능 입력 */
+.edit-box {
+  margin-bottom: 20px;
+}
+
+.edit-box label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.edit-box input {
+  width: calc(100% - 40px);
+  height: 50px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.password-edit-wrapper {
+  position: relative;
+}
+
+.pw-toggle-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  cursor: pointer;
+}
+
+/* 읽기 전용 */
+.readonly-box {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+}
+
+.readonly-box .info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.readonly-box .info-row:last-child {
+  border-bottom: none;
+}
+
+.readonly-box .label {
+  color: #666;
+  font-size: 14px;
+}
+
+.readonly-box .value {
+  font-size: 14px;
+  font-weight: 500;
+}

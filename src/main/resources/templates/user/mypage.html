@@ -2,64 +2,60 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
-  <title>ICHITABI - 당신의 가장 좋았던 일본을 공유해주세요</title>
+  <title>ICHITABI - 마이페이지</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
           rel="stylesheet"
   />
+
   <link rel="stylesheet" th:href="@{/css/reset.css}" />
   <link rel="stylesheet" th:href="@{/css/common.css}" />
   <link rel="stylesheet" th:href="@{/css/user.css}" />
 </head>
+
 <body>
 <div id="header" th:insert="~{fragment/header::header}"></div>
-<h2 id="title">회원가입</h2>
-<form
-        id="signup-container"
-        th:action="@{/user/signup}"
-        method="post"
->
-  <input type="text" name="email" id="email" placeholder="이메일" />
-  <div class="password-wrapper">
-    <input type="password" name="password" id="password" placeholder="비밀번호" />
-    <button
-            type="button"
-            id="togglePassword"
-            class="pw-toggle-btn hidden"
-    ></button>
-  </div>
-  <div class="password-wrapper">
-    <input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            placeholder="비밀번호 확인"
-    />
-    <button
-            type="button"
-            id="toggleRePassword"
-            class="pw-toggle-btn hidden"
-    ></button>
+
+<h2 id="title">마이페이지</h2>
+
+<section id="mypage-container">
+
+  <!-- 프로필 영역 -->
+  <div class="profile-box">
+    <div class="profile-img">
+      <img
+              th:src="${user.imgUrl != null ? user.imgUrl : '/images/default-profile.png'}"
+              alt="프로필 이미지"
+      />
+    </div>
+    <div class="profile-info">
+      <p class="nickname" th:text="${user.nickname}"></p>
+      <p class="email" th:text="${user.email}"></p>
+    </div>
   </div>
 
-  <input type="text" name="nickname" id="name" placeholder="닉네임" />
-  <input type="text" name="birth" id="birth" placeholder="YYYYMMDD" />
-  <div class="genderBtn">
-    <button type="button" id="manBtn" class="male-Btn">남자</button>
-    <button type="button" id="womenBtn" class="female-Btn">여자</button>
+  <!-- 유저 정보 -->
+  <div class="info-box">
+    <div class="info-row">
+      <span class="label">생년월일</span>
+      <span class="value" th:text="${user.birthday}"></span>
+    </div>
+    <div class="info-row">
+      <span class="label">성별</span>
+      <span class="value" th:text="${user.gender}"></span>
+    </div>
   </div>
-  <input type="hidden" name="gender" id="gender" />
-  <div class="agreement">
-    <input type="checkbox" name="agree" id="agree" />
-    <label for="agree">개인정보 수집 동의</label>
+
+  <!-- 버튼 영역 -->
+  <div class="mypage-btns">
+    <a th:href="@{/user/mypage/edit}" class="mypage-btn">정보 수정</a>
   </div>
-  <button type="submit"  class="submitBtn">회원가입</button>
-</form>
+
+</section>
+
 <div id="footer" th:insert="~{fragment/footer::footer}"></div>
-<script th:src="@{/js/user.js}"></script>
-<script th:src="@{/js/common.js}"></script>
-<script th:src="@{/js/util.js}"></script>
 </body>
 </html>
