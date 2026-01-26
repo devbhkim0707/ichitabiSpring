@@ -259,19 +259,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 작성하기 버튼 클릭시 확인창 보여주기 - 데이터 전송
 function confirmAction() {
-  const editMode = (typeof isEditMode !== 'undefined') && isEditMode;
+
+  const getCsrfFromCookie = () => {
+          const name = "XSRF-TOKEN";
+          const value = "; " + document.cookie;
+          const parts = value.split("; " + name + "=");
+          if (parts.length === 2) return parts.pop().split(";").shift();
+  };
+
   const actionText = isEditMode ? '수정' : '작성';
 
   if (confirm(`${actionText}하시겠습니까?`)) {
 
-    const csrfToken = document.querySelector("meta[name='_csrf']")?.getAttribute("content");
-    const csrfHeader = document.querySelector("meta[name='_csrf_header']")?.getAttribute("content");
+    const csrfToken = getCsrfFromCookie();
+    // CookieCsrfTokenRepository를 쓸 때는 헤더명이 보통 X-XSRF-TOKEN 입니다.
+    const csrfHeader = "X-XSRF-TOKEN";
+
+    const year = document.getElementsByName('year')[0].value;
+    const month = document.getElementsByName('month')[0].value;
+
+    if (year === 'none' || month === 'none') {
+        alert("여행 시기를 선택해주세요!");
+        return;
+    }
 
     const reviewData = {
-          id: isEditMode ? existingData.id : null, // 수정 - 기존 ID를 포함
+          id: isEditMode ? existingData.id : null, // 수정 -> 기존 ID를 포함
           title: document.getElementById('review-name').value,
           rating: selectedRating,
-          date: `${document.getElementsByName('year')[0].value}년 - ${document.getElementsByName('month')[0].value}월`,
+          date: `${year}년 - ${month}월`,
           companion: selectedBtn ? selectedBtn.dataset.value : '단독',
           content: document.getElementById('review-content').value,
           hashtags: [...tagSselectedBtn, ...hashtags]
@@ -290,7 +306,9 @@ function confirmAction() {
     }
 
     const headers = { 'Content-Type': 'application/json' };
-    if (csrfHeader && csrfToken) headers[csrfHeader] = csrfToken;
+    if (csrfToken) {
+       headers[csrfHeader] = csrfToken;
+    }
 
     // 서버 전송
     fetch('/review/write', {
@@ -299,13 +317,17 @@ function confirmAction() {
           body: JSON.stringify(reviewData)
         })
         .then(response => {
-                if (!response.ok) throw new Error('저장 실패');
+                if (!response.ok) {
+                   if(response.status === 403) console.error("CSRF 토큰 혹은 권한 오류입니다.");
+                   throw new Error('저장 실패');
+                }
                 return response.json(); // 서버에서 저장된 게시글의 ID 받아온다
             })
             .then(data => {
                 alert(`${actionText}이 완료되었습니다!`);
                 // 저장/수정 후 방금 작성한 글의 상세 페이지로 이동
-                location.href = '/review/detail/' + data.id;
+                const moveId = (typeof data === 'object') ? data.id : data;
+                location.href = '/review/detail/' + moveId;
             })
             .catch(error => {
                 console.error('Error:', error);
