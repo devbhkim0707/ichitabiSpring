@@ -24,8 +24,8 @@ spring:
 
 file:
   upload:
-    itemImgLocation: C:/shop/item
-    uploadPath: file:///C:/shop/
+    itemImgLocation: src/main/resources/static/images/user
+    uploadPath: src/main/resources/static/images/user
 
 
 mybatis:

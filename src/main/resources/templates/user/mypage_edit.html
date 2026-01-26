@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>ICHITABI - 정보 수정</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+          rel="stylesheet"
+  />
+
+  <link rel="stylesheet" th:href="@{/css/reset.css}" />
+  <link rel="stylesheet" th:href="@{/css/common.css}" />
+  <link rel="stylesheet" th:href="@{/css/user.css}" />
+</head>
+
+<body>
+<div id="header" th:insert="~{fragment/header::header}"></div>
+
+<h2 id="title">정보 수정</h2>
+
+<form
+        id="mypage-container"
+        th:action="@{/user/mypage/edit}"
+        method="post"
+        th:object="${userUpdate}"
+        enctype="multipart/form-data"
+>
+
+  <!-- 프로필 이미지 -->
+  <div class="profile-edit-box">
+    <label for="profileImage" class="profile-img-edit editable">
+      <img
+        th:src="${userUpdate?.imgUrl ?: '/images/default-profile.png'}"
+        alt="프로필 이미지"
+      />
+      <span class="edit-text">사진 변경</span>
+    </label>
+    <input
+      type="file"
+      id="profileImage"
+      name="profileImage"
+      accept="image/*"
+      hidden
+    />
+  </div>
+
+  <!-- 수정 가능 정보 -->
+  <div class="edit-box">
+    <label>닉네임</label>
+    <input
+      type="text"
+      id="nickname"
+      name="nickname"
+      th:value="${userUpdate?.nickname}"
+    />
+  </div>
+
+  <div class="edit-box password-edit-wrapper">
+    <label>새 비밀번호</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="변경 시에만 입력"
+    />
+    <button
+      type="button"
+      id="togglePassword"
+      class="pw-toggle-btn hidden"
+    ></button>
+  </div>
+
+  <div class="edit-box password-edit-wrapper">
+    <label>비밀번호 확인</label>
+    <input
+      type="password"
+      id="confirmPassword"
+      name="confirmPassword"
+      placeholder="비밀번호 확인"
+    />
+    <button
+      type="button"
+      id="toggleRePassword"
+      class="pw-toggle-btn hidden"
+    ></button>
+  </div>
+
+  <!-- 읽기 전용 정보 -->
+  <div class="readonly-box">
+    <div class="info-row">
+      <span class="label">이메일</span>
+      <span class="value" th:text="${userUpdate?.email}"></span>
+    </div>
+    <div class="info-row">
+      <span class="label">생년월일</span>
+      <span class="value" th:text="${userUpdate?.birthday}"></span>
+    </div>
+    <div class="info-row">
+      <span class="label">성별</span>
+      <span class="value" th:text="${userUpdate?.gender}"></span>
+    </div>
+  </div>
+
+  <!-- 버튼 -->
+  <div class="mypage-btns">
+    <button type="submit" class="mypage-btn">저장하기</button>
+    <a th:href="@{/user/mypage}" class="mypage-btn outline">취소</a>
+  </div>
+</form>
+<div id="footer" th:insert="~{fragment/footer::footer}"></div>
+<script th:src="@{/js/user_edit.js}"></script>
+</body>
+</html>

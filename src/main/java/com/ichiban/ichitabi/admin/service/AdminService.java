@@ -1,14 +1,13 @@
 package com.ichiban.ichitabi.admin.service;
 
-import com.ichiban.ichitabi.common.image.ImageDto;
-import com.ichiban.ichitabi.common.image.ImageMapper;
-import com.ichiban.ichitabi.common.image.ImageOwnerType;
+import com.ichiban.ichitabi.image.dto.ImageDto;
+import com.ichiban.ichitabi.image.mapper.ImageMapper;
+import com.ichiban.ichitabi.image.ImageOwnerType;
 import com.ichiban.ichitabi.festival.dto.FestivalDto;
 import com.ichiban.ichitabi.festival.mapper.FestivalMapper;
 import com.ichiban.ichitabi.review.mapper.ReviewMapper;
 import com.ichiban.ichitabi.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +30,7 @@ public class AdminService {
 
         ImageDto imageDto = new ImageDto();
         imageDto.setOwnerId(festivalId);
-        imageDto.setType(ImageOwnerType.FESTIVAL.name());
+        imageDto.setType(ImageOwnerType.FESTIVAL);
         imageDto.setImgUrl(festivalDto.getImgUrl());
         imageDto.setRepImgYn("Y");
 

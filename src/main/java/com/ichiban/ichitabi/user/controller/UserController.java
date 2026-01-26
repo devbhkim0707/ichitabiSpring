@@ -2,7 +2,9 @@ package com.ichiban.ichitabi.user.controller;
 
 import com.ichiban.ichitabi.user.UserType;
 import com.ichiban.ichitabi.user.dto.UserDto;
+import com.ichiban.ichitabi.user.dto.UserMyPageDto;
 import com.ichiban.ichitabi.user.form.UserSignUpForm;
+import com.ichiban.ichitabi.user.form.UserUpdateForm;
 import com.ichiban.ichitabi.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -11,10 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/user")
@@ -66,16 +68,61 @@ public class UserController {
 
     /* ================= 마이페이지 ================= */
 
-    @GetMapping("mypage")
-    public String userMyPage() {
+    @GetMapping("/mypage")
+    public String userMyPage(
+            Principal principal,
+            Model model
+    ) {
+        Long userId = userService.findUserId(principal.getName());
+        UserMyPageDto userMyPageDto = userService.findMyPageInfo(userId);
+
+        model.addAttribute("user", userMyPageDto);
+
         return "/user/mypage";
+    }
+
+    @GetMapping("/mypage/edit")
+    public String userMyPageEdit(
+            Principal principal,
+            Model model
+    ) {
+        Long userId = userService.findUserId(principal.getName());
+        UserMyPageDto userMyPageDto = userService.findMyPageInfo(userId);
+
+        model.addAttribute("userUpdate", userMyPageDto);
+
+        return "/user/mypage_edit";
+    }
+
+    @PostMapping("/mypage/edit")
+    public String updateMyPage(
+            @Valid UserUpdateForm userUpdate,
+            BindingResult bindingResult,
+            Principal principal,
+            @RequestParam("profileImage") MultipartFile profileImage
+    ) {
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+            System.out.println("에러ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ");
+            return "/user/mypage_edit";
+        }
+
+        try {
+            userService.updateUserInfo(principal.getName(), userUpdate, profileImage);
+        } catch (Exception e) {
+            System.out.println("예외ㅣㅣㅣㅣ" + e.getMessage());
+
+            return "/user/mypage_edit";
+        }
+
+        return "redirect:/user/mypage";
     }
 
 
     /* ================= 로그인 ================= */
 
     // 로그인 페이지
-    @GetMapping("login")
+    @GetMapping("/login")
     public String userLoginForm() {
         return "/user/sign_in";
     }
@@ -89,7 +136,7 @@ public class UserController {
 
     /* ================= 로그아웃 ================= */
 
-    @GetMapping("logout")
+    @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/user/login";
