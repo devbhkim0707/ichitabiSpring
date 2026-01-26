@@ -11,5 +11,7 @@ public interface ImageMapper {
 
     int insertImageFile(ImageDto imageDto);
 
+    int updateImageFile(ImageDto imageDto);
+
     ImageDto selectRepImage(Long userId, ImageOwnerType type);
 }

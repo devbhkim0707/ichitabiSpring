@@ -5,6 +5,8 @@ spring:
   devtools:
     livereload:
       enabled: true
+    restart:
+      enabled: true
 
   config:
     import: optional:classpath:application-env.properties

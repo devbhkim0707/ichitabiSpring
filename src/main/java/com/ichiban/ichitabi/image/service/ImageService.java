@@ -48,6 +48,8 @@ public class ImageService {
 
         savedUserImage.setImgUrl(imgUrl);
 
+        imageMapper.updateImageFile(savedUserImage);
+
         return imgUrl;
     }
 

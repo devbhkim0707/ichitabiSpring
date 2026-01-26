@@ -16,6 +16,14 @@
         VALUES          (#{ownerId}, #{type}, #{imgUrl}, #{repImgYn})
     </insert>
 
+    <!--  이미지 파일 update  -->
+    <update id="updateImageFile" parameterType="imageDto">
+        UPDATE  image
+            SET img_url  = #{imgUrl}
+        WHERE   owner_id = #{ownerId}
+            AND type     = #{type}
+    </update>
+
     <select id="selectRepImage" resultType="imageDto">
         SELECT  *
         FROM    image
